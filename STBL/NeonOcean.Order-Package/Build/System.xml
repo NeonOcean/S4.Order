@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<File xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<Group>3F7A0002</Group>
+	<Instance>DA2C2E7BD290D963</Instance>
+	<Name>NeonOcean.Order.STBL.System.{0}</Name>
+	<Entries>
+		<Entry>
+			<Key>2082533121</Key>
+			<Identifier>NeonOcean.Order.System.Debug.Write_Notification.Text</Identifier>
+			<English>Failed to write a debug file, this problem may make error reporting impossible.\n\nError Information:\n{1.String}</English>
+		</Entry>
+		<Entry>
+			<Key>4130649510</Key>
+			<Identifier>NeonOcean.Order.System.Debug.Write_Notification.Title</Identifier>
+			<English>NeonOcean - Order:\nMajor Failure Detected</English>
+		</Entry>
+		<Entry>
+			<Key>417805022</Key>
+			<Identifier>NeonOcean.Order.System.Distribution.Promotions.Default.Button</Identifier>
+			<English>View</English>
+		</Entry>
+		<Entry>
+			<Key>3873914742</Key>
+			<Identifier>NeonOcean.Order.System.Distribution.Promotions.Default.Title</Identifier>
+			<English>NeonOcean:</English>
+		</Entry>
+		<Entry>
+			<Key>3805660097</Key>
+			<Identifier>NeonOcean.Order.System.Distribution.Update_Notification.Button</Identifier>
+			<English>View update</English>
+		</Entry>
+		<Entry>
+			<Key>4125734532</Key>
+			<Identifier>NeonOcean.Order.System.Distribution.Update_Notification.Preview_Text</Identifier>
+			<English>The currently installed version of this mod has been superseded by a new one.\n\nRelease type: Patrons only\nVersion: {0.String}</English>
+		</Entry>
+		<Entry>
+			<Key>683934429</Key>
+			<Identifier>NeonOcean.Order.System.Distribution.Update_Notification.Release_Text</Identifier>
+			<English>The currently installed version of this mod has been superseded by a new one.\n\nRelease type: Public\nVersion: {0.String}</English>
+		</Entry>
+		<Entry>
+			<Key>2397609223</Key>
+			<Identifier>NeonOcean.Order.System.Distribution.Update_Notification.Title</Identifier>
+			<English>NeonOcean - {0.String}:\nUpdate Available</English>
+		</Entry>
+		<Entry>
+			<Key>2848967417</Key>
+			<Identifier>NeonOcean.Order.System.Generic_Dialogs.Open_Browser_Dialog.No_Button</Identifier>
+			<English>No</English>
+		</Entry>
+		<Entry>
+			<Key>206665494</Key>
+			<Identifier>NeonOcean.Order.System.Generic_Dialogs.Open_Browser_Dialog.Text</Identifier>
+			<English>This will open in an external browser. Would you like to proceed?&lt;br/&gt;&lt;br/&gt;</English>
+		</Entry>
+		<Entry>
+			<Key>2198622161</Key>
+			<Identifier>NeonOcean.Order.System.Generic_Dialogs.Open_Browser_Dialog.Yes_Button</Identifier>
+			<English>Yes</English>
+		</Entry>
+		<Entry>
+			<Key>1994869418</Key>
+			<Identifier>NeonOcean.Order.System.Interactions.Global.Support_NeonOcean.Display_Name</Identifier>
+			<English>Support NeonOcean</English>
+		</Entry>
+		<Entry>
+			<Key>404109003</Key>
+			<Identifier>NeonOcean.Order.System.Interactions.Global.Visit_NeonOcean_Site.Display_Name</Identifier>
+			<English>Visit NeonOcean's website</English>
+		</Entry>
+		<Entry>
+			<Key>3146042648</Key>
+			<Identifier>NeonOcean.Order.System.Interactions.Standard.Documentation.Display_Name</Identifier>
+			<English>Documentation</English>
+		</Entry>
+		<Entry>
+			<Key>3310385506</Key>
+			<Identifier>NeonOcean.Order.System.Interactions.Standard.Reset.Display_Name</Identifier>
+			<English>Reset</English>
+		</Entry>
+		<Entry>
+			<Key>681249744</Key>
+			<Identifier>NeonOcean.Order.System.Interactions.Standard.Visit_Mod_Page.Display_Name</Identifier>
+			<English>Visit mod page</English>
+		</Entry>
+		<Entry>
+			<Key>2515170047</Key>
+			<Identifier>NeonOcean.Order.System.Interactions.Support.Dependent.Disabled_Tooltip</Identifier>
+			<English>The mod '{0.String}' is not loaded.</English>
+		</Entry>
+		<Entry>
+			<Key>2502811662</Key>
+			<Identifier>NeonOcean.Order.System.Interaction_Categories.ModSettings</Identifier>
+			<English>Mod Settings</English>
+		</Entry>
+		<Entry>
+			<Key>2273491374</Key>
+			<Identifier>NeonOcean.Order.System.Interaction_Categories.NeonOcean</Identifier>
+			<English>NeonOcean</English>
+		</Entry>
+		<Entry>
+			<Key>2638093493</Key>
+			<Identifier>NeonOcean.Order.System.Interaction_Categories.Order</Identifier>
+			<English>Order</English>
+		</Entry>
+		<Entry>
+			<Key>10486687</Key>
+			<Identifier>NeonOcean.Order.System.Loading.Compatibility_Notification.Text</Identifier>
+			<English>Detected missing mods or incompatible mod versions. \n\nThe following mods had to be disabled because of this:\n{0.String}</English>
+		</Entry>
+		<Entry>
+			<Key>314878352</Key>
+			<Identifier>NeonOcean.Order.System.Loading.Compatibility_Notification.Title</Identifier>
+			<English>NeonOcean - Order:\nBad Mod Setup Detected</English>
+		</Entry>
+		<Entry>
+			<Key>3835239609</Key>
+			<Identifier>NeonOcean.Order.System.Loading.Failure_Notification.Text</Identifier>
+			<English>Some mods failed to load correctly.\n\nThe following mods had to be disabled because of this:\n{0.String}</English>
+		</Entry>
+		<Entry>
+			<Key>3927702068</Key>
+			<Identifier>NeonOcean.Order.System.Loading.Failure_Notification.Title</Identifier>
+			<English>NeonOcean - Order:\nMajor Failure Detected</English>
+		</Entry>
+		<Entry>
+			<Key>1328112988</Key>
+			<Identifier>NeonOcean.Order.System.Loading.Not_Loaded_Notification.Text</Identifier>
+			<English>A few mods were never loaded, even though they should have been.\n\nThe following mods are not loaded because of this:\n{0.String}</English>
+		</Entry>
+		<Entry>
+			<Key>2899849598</Key>
+			<Identifier>NeonOcean.Order.System.Loading.Not_Loaded_Notification.Title</Identifier>
+			<English>NeonOcean - Main:\nMods Not Loaded</English>
+		</Entry>
+		<Entry>
+			<Key>1020902634</Key>
+			<Identifier>NeonOcean.Order.System.Reset.Confirm_Dialog.Everything_Text</Identifier>
+			<English>Are you sure you want to reset this mod?</English>
+		</Entry>
+		<Entry>
+			<Key>291917783</Key>
+			<Identifier>NeonOcean.Order.System.Reset.Confirm_Dialog.No_Button</Identifier>
+			<English>No</English>
+		</Entry>
+		<Entry>
+			<Key>1617918298</Key>
+			<Identifier>NeonOcean.Order.System.Reset.Confirm_Dialog.Settings_Text</Identifier>
+			<English>Are you sure you want to reset all settings for this mod?</English>
+		</Entry>
+		<Entry>
+			<Key>1904365976</Key>
+			<Identifier>NeonOcean.Order.System.Reset.Confirm_Dialog.Title</Identifier>
+			<English>Resetting {0.String}...</English>
+		</Entry>
+		<Entry>
+			<Key>2704255539</Key>
+			<Identifier>NeonOcean.Order.System.Reset.Confirm_Dialog.Yes_Button</Identifier>
+			<English>Yes</English>
+		</Entry>
+		<Entry>
+			<Key>1196102140</Key>
+			<Identifier>NeonOcean.Order.System.Reset.Dialog.Cancel_Button</Identifier>
+			<English>Cancel</English>
+		</Entry>
+		<Entry>
+			<Key>2723434677</Key>
+			<Identifier>NeonOcean.Order.System.Reset.Dialog.Everything_Button</Identifier>
+			<English>Reset Everything</English>
+		</Entry>
+		<Entry>
+			<Key>214434395</Key>
+			<Identifier>NeonOcean.Order.System.Reset.Dialog.Settings_Button</Identifier>
+			<English>Reset Settings</English>
+		</Entry>
+		<Entry>
+			<Key>2028538986</Key>
+			<Identifier>NeonOcean.Order.System.Reset.Dialog.Text</Identifier>
+			<English>What do you want to reset?</English>
+		</Entry>
+		<Entry>
+			<Key>3199216600</Key>
+			<Identifier>NeonOcean.Order.System.Reset.Dialog.Title</Identifier>
+			<English>Resetting {0.String}...</English>
+		</Entry>
+		<Entry>
+			<Key>2976543847</Key>
+			<Identifier>NeonOcean.Order.System.Settings.Boolean.False</Identifier>
+			<English>Disabled</English>
+		</Entry>
+		<Entry>
+			<Key>2752506041</Key>
+			<Identifier>NeonOcean.Order.System.Settings.Boolean.True</Identifier>
+			<English>Enabled</English>
+		</Entry>
+		<Entry>
+			<Key>1818702976</Key>
+			<Identifier>NeonOcean.Order.System.Settings.Dialog.Apply_Button</Identifier>
+			<English>Apply</English>
+		</Entry>
+		<Entry>
+			<Key>953331461</Key>
+			<Identifier>NeonOcean.Order.System.Settings.Dialog.Cancel_Button</Identifier>
+			<English>Cancel</English>
+		</Entry>
+		<Entry>
+			<Key>745826898</Key>
+			<Identifier>NeonOcean.Order.System.Settings.Dialog.Choice_Button</Identifier>
+			<English>{0.String}{1.String}{2.String}</English>
+		</Entry>
+		<Entry>
+			<Key>3070643665</Key>
+			<Identifier>NeonOcean.Order.System.Settings.Dialog.Text_Template</Identifier>
+			<English>{0.String}\n{1.String}\n\nDefault: {2.String}\n\n\n&lt;a href="event:{3.String}"&gt;&lt;u&gt;View Documentation&lt;/u&gt;&lt;/a&gt;\n\n</English>
+		</Entry>
+		<Entry>
+			<Key>2027048008</Key>
+			<Identifier>NeonOcean.Order.System.Settings.Invalid_Notification.Text</Identifier>
+			<English>"{0.String}" is and invalid input for this setting.</English>
+		</Entry>
+		<Entry>
+			<Key>1307180164</Key>
+			<Identifier>NeonOcean.Order.System.Settings.Invalid_Notification.Title</Identifier>
+			<English>NeonOcean - {0.String}:</English>
+		</Entry>
+		<Entry>
+			<Key>3001875472</Key>
+			<Identifier>NeonOcean.Order.System.Settings.Values.Check_For_Preview_Updates.Description</Identifier>
+			<English>If enabled, the mod will report preview updates along with release updates. The setting "Check For Updates" still needs to be enabled in order to check for updates. This setting will not be used if NeonOcean's Main is installed.</English>
+		</Entry>
+		<Entry>
+			<Key>2921310502</Key>
+			<Identifier>NeonOcean.Order.System.Settings.Values.Check_For_Preview_Updates.Name</Identifier>
+			<English>Check For Preview Updates</English>
+		</Entry>
+		<Entry>
+			<Key>2031660311</Key>
+			<Identifier>NeonOcean.Order.System.Settings.Values.Check_For_Updates.Description</Identifier>
+			<English>If enabled, a notification will be shown whenever a mod update is available. This setting will not be used if NeonOcean's Main is installed.</English>
+		</Entry>
+		<Entry>
+			<Key>2620196778</Key>
+			<Identifier>NeonOcean.Order.System.Settings.Values.Check_For_Updates.Name</Identifier>
+			<English>Check For Updates</English>
+		</Entry>
+		<Entry>
+			<Key>1477334222</Key>
+			<Identifier>NeonOcean.Order.System.Settings.Values.Show_Promotions.Description</Identifier>
+			<English>If enabled, the mod may occasionally show a notification to promote things like new mods or major updates. All promotions will only ever be shown once. This setting will not be used if NeonOcean's Main is installed.</English>
+		</Entry>
+		<Entry>
+			<Key>3026272262</Key>
+			<Identifier>NeonOcean.Order.System.Settings.Values.Show_Promotions.Name</Identifier>
+			<English>Show Promotions</English>
+		</Entry>
+	</Entries>
+</File>

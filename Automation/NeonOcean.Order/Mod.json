@@ -1,0 +1,23 @@
+{
+	"Namespace": "NeonOcean.Order",
+	"Github Name": "Order",
+	"Packages": [
+		{
+			"File Name": "NeonOcean.Order-Package.package",
+			"Merge Root": "NeonOcean.Order"
+		}
+	],
+	"Publishing": {
+		"Installer File Name": "NeonOcean.Order-Installer-v{0}.exe",
+		"Files File Name": "NeonOcean.Order-Files-v{0}.zip",
+		"Sources File Name": "NeonOcean.Order-Sources-v{0}.zip"
+	},
+	"Python": {
+		"Archive File Name": "--NeonOcean.Order.ts4script",
+		"Source Root": "",
+		"Source Target": "NeonOcean",
+		"Source Excluded": [],
+		"Merge Root": ""
+	},
+	"Uninstall": "NeonOcean.Order/Uninstall.exe"
+}

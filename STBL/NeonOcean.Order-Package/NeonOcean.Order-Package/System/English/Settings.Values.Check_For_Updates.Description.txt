@@ -1,0 +1,1 @@
+If enabled, a notification will be shown whenever a mod update is available. This setting will not be used if NeonOcean's Main is installed.
