@@ -1,6 +1,6 @@
 {
 	"Namespace": "NeonOcean.Order",
-	"Github Name": "Order",
+	"Name": "Order",
 	"Packages": [
 		{
 			"File Name": "NeonOcean.Order-Package.package",

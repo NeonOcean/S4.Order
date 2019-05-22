@@ -44,7 +44,7 @@ class Level:
 			functionName = functionDictionary["Function"]  # type: str
 			Arguments = functionDictionary["Arguments"]  # type: list
 			KeywordArguments = functionDictionary["Keyword Arguments"]  # type: dict
-
+	
 			try:
 				if not moduleName in sys.modules:
 					raise Exception("Module '" + moduleName + "' is not imported.")

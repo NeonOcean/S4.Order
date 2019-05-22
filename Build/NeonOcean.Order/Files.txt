@@ -1,9 +1,11 @@
 --NeonOcean.Order.ts4script
+NeonOcean.Order\Changes.html
 NeonOcean.Order\Documentation.html
 NeonOcean.Order\Files.txt
 NeonOcean.Order\License.html
 NeonOcean.Order\Mod Page.html
 NeonOcean.Order\NeonOcean-Mod.json
 NeonOcean.Order\NeonOcean.Order-Package.package
+NeonOcean.Order\Plans.html
 NeonOcean.Order\Uninstall.exe
 NeonOcean.Order\Uninstall.exe.config

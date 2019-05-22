@@ -72,7 +72,7 @@ class _Promotion:
 
 			targetIndex += 1
 
-		targetsTypeString = promotionDictionary.get("Targets Type", _FilterTypes.Whitelist.name)  # type: str
+		targetsTypeString = promotionDictionary.get("TargetsType", _FilterTypes.Whitelist.name)  # type: str
 
 		try:
 			self.TargetsType = Parse.ParseEnum(targetsTypeString, _FilterTypes)  # type: _FilterTypes
@@ -96,7 +96,7 @@ class _Promotion:
 
 			modIndex += 1
 
-		modsTypeString = promotionDictionary.get("Mods Type", _FilterTypes.Whitelist.name)  # type: str
+		modsTypeString = promotionDictionary.get("ModsType", _FilterTypes.Whitelist.name)  # type: str
 
 		try:
 			self.ModsType = Parse.ParseEnum(modsTypeString, _FilterTypes)  # type: _FilterTypes
@@ -117,17 +117,17 @@ class _Promotion:
 		if not isinstance(self.Link, str) and self.Link is not None:
 			Debug.Log("Expected type of 'str' for a promotion link. Promotion: " + self.Identifier, This.Mod.Namespace, Debug.LogLevels.Warning, group = This.Mod.Namespace, owner = __name__)
 
-		self.Title = promotionDictionary.get("S4 Title")  # type: typing.Optional[str]
+		self.Title = promotionDictionary.get("S4Title")  # type: typing.Optional[str]
 
 		if not isinstance(self.Title, str) and self.Title is not None:
 			Debug.Log("Expected type of 'str' for a promotion title. Promotion: " + self.Identifier, This.Mod.Namespace, Debug.LogLevels.Warning, group = This.Mod.Namespace, owner = __name__)
 
-		self.Text = promotionDictionary.get("S4 Text")  # type: typing.Optional[str]
+		self.Text = promotionDictionary.get("S4Text")  # type: typing.Optional[str]
 
 		if not isinstance(self.Text, str) and self.Text is not None:
 			Debug.Log("Expected type of 'str' for a promotion text. Promotion: " + self.Identifier, This.Mod.Namespace, Debug.LogLevels.Warning, group = This.Mod.Namespace, owner = __name__)
 
-		self.LinkButton = promotionDictionary.get("S4 Link Button")  # type: typing.Optional[str]
+		self.LinkButton = promotionDictionary.get("S4LinkButton")  # type: typing.Optional[str]
 
 		if not isinstance(self.LinkButton, str) and self.LinkButton is not None:
 			Debug.Log("Expected type of 'str' for a promotion link button. Promotion: " + self.Identifier, This.Mod.Namespace, Debug.LogLevels.Warning, group = This.Mod.Namespace, owner = __name__)
