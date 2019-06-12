@@ -5,9 +5,9 @@ from NeonOcean.Order import Debug, This, Mods
 from NeonOcean.Order.Tools import Exceptions, Patcher, Types
 from sims4.tuning import instance_manager
 
-_controllers = list()  # type: typing.List[typing.Type[Controller]]
+_announcers = list()  # type: typing.List[typing.Type[Announcer]]
 
-class Controller:
+class Announcer:
 	Host = This.Mod  # type: Mods.Mod
 	Enabled = True  # type: bool
 	Reliable = False  # type: bool
@@ -15,7 +15,7 @@ class Controller:
 	_level = 0  # type: float
 
 	def __init_subclass__ (cls, **kwargs):
-		SetupController(cls)
+		SetupAnnouncer(cls)
 
 	@classmethod
 	def GetLevel (cls) -> float:
@@ -24,7 +24,7 @@ class Controller:
 	@classmethod
 	def SetLevel (cls, value) -> None:
 		cls._level = value
-		_SortControllers()
+		_SortAnnouncers()
 
 	@classmethod
 	def OnInitializeSubclass (cls) -> None:
@@ -38,88 +38,83 @@ class Controller:
 	def OnLoadingScreenAnimationFinished (cls, zoneReference: zone.Zone) -> None:
 		pass
 
-def SetupController (controller: typing.Type[Controller]) -> None:
-	if not issubclass(controller, Controller):
-		raise Exceptions.IncorrectTypeException(controller, "controller", (Controller,))
+def SetupAnnouncer (announcer: typing.Type[Announcer]) -> None:
+	if not issubclass(announcer, Announcer):
+		raise Exceptions.IncorrectTypeException(announcer, "announcer", (Announcer,))
 
-	if controller in _controllers:
+	if announcer in _announcers:
 		return
 
-	_Register(controller)
+	_announcers.append(announcer)
 
-	_SortControllers()
-	OnInitializeSubclass()
+	_SortAnnouncers()
+	OnInitializeSubclass(announcer)
 
-def OnInitializeSubclass () -> None:
-	for controller in _controllers:  # type: typing.Type[Controller]
-		try:
-			if not controller.Enabled:
-				continue
+def OnInitializeSubclass (announcer: typing.Type[Announcer]) -> None:
+	try:
+		if not announcer.Enabled:
+			return
 
-			if not controller.Host.IsLoaded() and not controller.Reliable:
-				continue
+		if not announcer.Host.IsLoaded() and not announcer.Reliable:
+			return
 
-			controller.OnInitializeSubclass()
-		except Exception as e:
-			Debug.Log("Failed to run 'OnInitializeSubclass' for '" + Types.GetFullName(controller) + "'", controller.Host.Namespace, Debug.LogLevels.Exception, group = controller.Host.Namespace, owner = __name__, exception = e)
+		announcer.OnInitializeSubclass()
+	except Exception as e:
+		Debug.Log("Failed to run 'OnInitializeSubclass' for '" + Types.GetFullName(announcer) + "'", announcer.Host.Namespace, Debug.LogLevels.Exception, group = announcer.Host.Namespace, owner = __name__, exception = e)
 
 @Patcher.Decorator(instance_manager.InstanceManager, "on_start", permanent = True)
 def OnInstanceManagerLoaded (self: instance_manager.InstanceManager) -> None:
-	for controller in _controllers:  # type: typing.Type[Controller]
+	for announcer in _announcers:  # type: typing.Type[Announcer]
 		try:
-			if not controller.Enabled:
+			if not announcer.Enabled:
 				continue
 
-			if not controller.Host.IsLoaded() and not controller.Reliable:
+			if not announcer.Host.IsLoaded() and not announcer.Reliable:
 				continue
 
-			controller.OnInstanceManagerLoaded(self)
+			announcer.OnInstanceManagerLoaded(self)
 		except Exception as e:
-			Debug.Log("Failed to run 'OnInstanceManagerLoaded' for '" + Types.GetFullName(controller) + "'", controller.Host.Namespace, Debug.LogLevels.Exception, group = controller.Host.Namespace, owner = __name__, exception = e)
+			Debug.Log("Failed to run 'OnInstanceManagerLoaded' for '" + Types.GetFullName(announcer) + "'", announcer.Host.Namespace, Debug.LogLevels.Exception, group = announcer.Host.Namespace, owner = __name__, exception = e)
 
 @Patcher.Decorator(zone.Zone, "on_loading_screen_animation_finished", permanent = True)
 def OnLoadingScreenAnimationFinished (self: zone.Zone) -> None:
-	for controller in _controllers:  # type: typing.Type[Controller]
+	for announcer in _announcers:  # type: typing.Type[Announcer]
 		try:
-			if not controller.Enabled:
+			if not announcer.Enabled:
 				continue
 
-			if not controller.Host.IsLoaded() and not controller.Reliable:
+			if not announcer.Host.IsLoaded() and not announcer.Reliable:
 				continue
 
-			controller.OnLoadingScreenAnimationFinished(self)
+			announcer.OnLoadingScreenAnimationFinished(self)
 		except Exception as e:
-			Debug.Log("Failed to run 'OnLoadingScreenAnimationFinished' for '" + Types.GetFullName(controller) + "'", controller.Host.Namespace, Debug.LogLevels.Exception, group = controller.Host.Namespace, owner = __name__, exception = e)
+			Debug.Log("Failed to run 'OnLoadingScreenAnimationFinished' for '" + Types.GetFullName(announcer) + "'", announcer.Host.Namespace, Debug.LogLevels.Exception, group = announcer.Host.Namespace, owner = __name__, exception = e)
 
-def _Register (controller: typing.Type[Controller]) -> None:
-	if not controller in _controllers:
-		_controllers.append(controller)
+def _SortAnnouncers () -> None:
+	global _announcers
 
-def _SortControllers () -> None:
-	global _controllers
+	announcers = _announcers.copy()  # type: typing.List[typing.Type[Announcer]]
 
-	controllers = _controllers.copy()  # type: typing.List[typing.Type[Controller]]
+	sortedAnnouncers = list()
 
-	sortedControllers = list()
-
-	for loopCount in range(len(controllers)):  # type: int
+	for loopCount in range(len(announcers)):  # type: int
 		targetIndex = None  # type: int
 
-		for currentIndex in range(len(controllers)):
+		for currentIndex in range(len(announcers)):
 			if targetIndex is None:
 				targetIndex = currentIndex
 				continue
 
-			if controllers[currentIndex].GetLevel() != controllers[targetIndex].GetLevel():
-				if controllers[currentIndex].GetLevel() < controllers[targetIndex].GetLevel():
+			if announcers[currentIndex].GetLevel() != announcers[targetIndex].GetLevel():
+				if announcers[currentIndex].GetLevel() < announcers[targetIndex].GetLevel():
 					targetIndex = currentIndex
 					continue
 			else:
-				if controllers[currentIndex].__module__ < controllers[targetIndex].__module__:
+				if announcers[currentIndex].__module__ < announcers[targetIndex].__module__:
 					targetIndex = currentIndex
 					continue
 
-		sortedControllers.append(controllers[targetIndex])
-		controllers.pop(targetIndex)
+		sortedAnnouncers.append(announcers[targetIndex])
+		announcers.pop(targetIndex)
 
-		_controllers = sortedControllers
+		_announcers = sortedAnnouncers

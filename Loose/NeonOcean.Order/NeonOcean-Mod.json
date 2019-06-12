@@ -1,18 +1,18 @@
 {
 	"Namespace": "NeonOcean.Order",
 	"Name": "Order",
-	"Load Controller": "NeonOcean.Order",
+	"LoadController": "NeonOcean.Order",
 	
 	"Author": "NeonOcean",
-	"Version": "1.1.0",
+	"Version": "1.2.0",
 	"Distribution": "NeonOcean",
 	"Rating": "Normal",
 	
-	"Script Paths": [
+	"ScriptPaths": [
 		"--NeonOcean.Order.ts4script"
 	],
 
 	"Requirements": [],
 
-	"Compatibility": { }
+	"Compatibility": {}
 }

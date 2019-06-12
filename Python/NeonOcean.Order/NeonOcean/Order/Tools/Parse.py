@@ -1,24 +1,16 @@
-import re
 import typing
 
 import enum
 from NeonOcean.Order.Tools import Exceptions, Types
 
-_NumberRegex = re.compile(r'(-?(?:0|[1-9]\d*))(\.\d+)?([eE][-+]?\d+)?', (re.VERBOSE | re.MULTILINE | re.DOTALL))
-
 def ParseNumber (string: str) -> typing.Union[int, float]:
 	if not isinstance(string, str):
 		raise Exceptions.IncorrectTypeException(string, "string", (str,))
 
-	match = _NumberRegex.match(string)
-	if match is not None:
-		integer, decimal, notation = match.groups()  # type: str, str, str
-		if not decimal and not notation:
-			return int(integer)
-		else:
-			return float(integer + (decimal or '') + (notation or ''))
-
-	raise ValueError("'" + string + "' is not a valid int or float.")
+	try:
+		return int(string)
+	except:
+		return float(string)
 
 def ParseBool (string: str) -> bool:
 	if not isinstance(string, str):

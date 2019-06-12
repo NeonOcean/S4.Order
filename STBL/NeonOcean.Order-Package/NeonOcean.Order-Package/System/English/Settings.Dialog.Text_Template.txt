@@ -1,8 +1,0 @@
-{0.String}
-{1.String}
-
-Default: {2.String}
-
-
-<a href="event:{3.String}"><u>View Documentation</u></a>
-

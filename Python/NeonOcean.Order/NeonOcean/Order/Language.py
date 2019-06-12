@@ -75,7 +75,7 @@ class _Identifier:
 		else:
 			return targetIdentifierObject
 
-class _AnnouncerReliable(Director.Controller):
+class _AnnouncerReliable(Director.Announcer):
 	Host = This.Mod
 	Reliable = True  # type: bool
 
@@ -136,6 +136,9 @@ def CreateLocalizationString (text: str) -> localization.LocalizedString:
 		raise Exceptions.IncorrectTypeException(text, "text", (str,))
 
 	return localization.LocalizationHelperTuning.get_raw_text(text)
+
+def MakeLocalizationStringCallable (string: localization.LocalizedString) -> typing.Callable[[], localization.LocalizedString]:
+	return lambda *args, **kwargs: string
 
 def _SplitIdentifier (identifier: str) -> typing.List[str]:
 	return identifier.split(".")  # type: typing.List[str]

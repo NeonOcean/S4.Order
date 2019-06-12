@@ -6,6 +6,8 @@ class DialogTypes(enum.Int):
 	NoDialog = 0
 	Input = 2  # type: DialogTypes
 	Choice = 3  # type: DialogTypes
+	DictionaryInput = 4  # type: DialogTypes
+	DictionaryChoice = 5  # type: DialogTypes
 
 class SettingBase:
 	IsSetting: bool
@@ -14,15 +16,14 @@ class SettingBase:
 	Type: typing.Type
 	Default: typing.Any
 
-	Name: typing.Any
-	Description: typing.Any
-	DescriptionInput: typing.Optional[typing.Any]
+	Dialog: typing.Any
 
-	DialogType: DialogTypes
-	Values: dict
-	InputRestriction: typing.Optional[str]
+	def __init_subclass__ (cls, **kwargs):
+		cls.OnInitializeSubclass()
 
-	DocumentationPage: str
+	@classmethod
+	def OnInitializeSubclass (cls) -> None:
+		pass
 
 	@classmethod
 	def Setup (cls) -> None:
@@ -41,6 +42,10 @@ class SettingBase:
 		raise NotImplementedError()
 
 	@classmethod
+	def SetDefault (cls) -> None:
+		pass
+
+	@classmethod
 	def Reset (cls) -> None:
 		raise NotImplementedError()
 
@@ -53,17 +58,9 @@ class SettingBase:
 		raise NotImplementedError()
 
 	@classmethod
-	def GetInputTokens (cls) -> typing.Tuple[typing.Any, ...]:
-		return tuple()
+	def GetName (cls) -> typing.Any:
+		raise NotImplementedError()
 
 	@classmethod
 	def ShowDialog (cls) -> None:
-		raise NotImplementedError()
-
-	@classmethod
-	def GetInputString (cls, inputValue: typing.Any) -> str:
-		raise NotImplementedError()
-
-	@classmethod
-	def ParseInputString (cls, inputString: str) -> typing.Any:
 		raise NotImplementedError()

@@ -71,7 +71,7 @@ def _Setup () -> None:
 
 	ModsPath = os.path.join(UserDataPath, "Mods")  # type: str
 	SavesPath = os.path.join(UserDataPath, "Saves")  # type: str
-	DebugPath = os.path.join(UserDataPath, Information.Author, "Debug")  # type: str
-	PersistentPath = os.path.join(UserDataPath, Information.Author, "Persistent")  # type: str
+	DebugPath = os.path.join(UserDataPath, Information.RootNamespace, "Debug")  # type: str
+	PersistentPath = os.path.join(UserDataPath, Information.RootNamespace, "Persistent")  # type: str
 
 _Setup()

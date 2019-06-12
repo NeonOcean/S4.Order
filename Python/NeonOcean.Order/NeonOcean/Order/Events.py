@@ -122,7 +122,7 @@ def RegisterOnModUnload (callback: typing.Callable, level: typing.Union[int, flo
 	This event is typically called just before a mod is unloaded.
 
 	:param callback: Callbacks should be functions, the use of callbacks that are not functions has not been tested.
-					 Callbacks for this event should take two arguments with the types: NeonOcean.Main.Mods.Mod and bool.
+					 Callbacks for this event should take two arguments with the types: NeonOcean.Order.Mods.Mod and bool.
 					 The first argument is a reference to the mod being unloaded.
 					 The second argument is a boolean denoting whether or not the mod is being unloaded because the application is closing.
 
@@ -194,7 +194,7 @@ def RegisterOnModReload (callback: typing.Callable, level: typing.Union[int, flo
 	This event is typically called just before a mod is reloaded.
 
 	:param callback: Callbacks should be functions, the use of callbacks that are not functions has not been tested.
-					 Callbacks for this event should take one argument with the type: NeonOcean.Main.Mods.Mod.
+					 Callbacks for this event should take one argument with the type: NeonOcean.Order.Mods.Mod.
 					 The argument is a reference to the mod being reloaded.
 
 	:type callback: typing.Callable

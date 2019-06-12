@@ -2,11 +2,11 @@
 <I n="NeonOcean.Order.STBL.System.Identifiers" s="13929200698819281377" i="snippet" m="snippets" c="NeonoceanGlobalLanguageIdentifiers">
 	<L n="value">
 		<U>
-			<T n="key">NeonOcean.Order.System.Debug.Write_Notification.Text</T>
-			<T n="value">2082533121</T>
+			<T n="key">NeonOcean.Order.System.Debug.Write_Failure_Notification.Text</T>
+			<T n="value">3925577695</T>
 		</U>
 		<U>
-			<T n="key">NeonOcean.Order.System.Debug.Write_Notification.Title</T>
+			<T n="key">NeonOcean.Order.System.Debug.Write_Failure_Notification.Title</T>
 			<T n="value">4130649510</T>
 		</U>
 		<U>
@@ -154,30 +154,6 @@
 			<T n="value">2752506041</T>
 		</U>
 		<U>
-			<T n="key">NeonOcean.Order.System.Settings.Dialog.Apply_Button</T>
-			<T n="value">1818702976</T>
-		</U>
-		<U>
-			<T n="key">NeonOcean.Order.System.Settings.Dialog.Cancel_Button</T>
-			<T n="value">953331461</T>
-		</U>
-		<U>
-			<T n="key">NeonOcean.Order.System.Settings.Dialog.Choice_Button</T>
-			<T n="value">745826898</T>
-		</U>
-		<U>
-			<T n="key">NeonOcean.Order.System.Settings.Dialog.Text_Template</T>
-			<T n="value">3070643665</T>
-		</U>
-		<U>
-			<T n="key">NeonOcean.Order.System.Settings.Invalid_Notification.Text</T>
-			<T n="value">2027048008</T>
-		</U>
-		<U>
-			<T n="key">NeonOcean.Order.System.Settings.Invalid_Notification.Title</T>
-			<T n="value">1307180164</T>
-		</U>
-		<U>
 			<T n="key">NeonOcean.Order.System.Settings.Values.Check_For_Preview_Updates.Description</T>
 			<T n="value">3001875472</T>
 		</U>
@@ -200,6 +176,26 @@
 		<U>
 			<T n="key">NeonOcean.Order.System.Settings.Values.Show_Promotions.Name</T>
 			<T n="value">3026272262</T>
+		</U>
+		<U>
+			<T n="key">NeonOcean.Order.System.Setting_Dialogs.Apply_Button</T>
+			<T n="value">1818702976</T>
+		</U>
+		<U>
+			<T n="key">NeonOcean.Order.System.Setting_Dialogs.Cancel_Button</T>
+			<T n="value">953331461</T>
+		</U>
+		<U>
+			<T n="key">NeonOcean.Order.System.Setting_Dialogs.Choice_Button</T>
+			<T n="value">745826898</T>
+		</U>
+		<U>
+			<T n="key">NeonOcean.Order.System.Setting_Dialogs.Standard.Text_Documentation_Template</T>
+			<T n="value">1982053343</T>
+		</U>
+		<U>
+			<T n="key">NeonOcean.Order.System.Setting_Dialogs.Standard.Text_Template</T>
+			<T n="value">3070643665</T>
 		</U>
 	</L>
 </I>

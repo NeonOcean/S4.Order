@@ -118,9 +118,9 @@ class Persistent:
 
 						try:
 							Version.Version(persistentValueValue)
-						except Exception as e:
+						except:
 							persistentData.pop(persistentKey, None)
-							Debug.Log("Cannot parse '" + persistentValueValue + "' to a version object. Key: '" + persistentKey + "'.\n" + Debug.FormatException(e), self.HostNamespace, Debug.LogLevels.Warning, group = self.HostNamespace, owner = __name__)
+							Debug.Log("Cannot parse '" + persistentValueValue + "' to a version object. Key: '" + persistentKey + "'.", self.HostNamespace, Debug.LogLevels.Warning, group = self.HostNamespace, owner = __name__)
 							changed = True
 
 						break
@@ -143,8 +143,8 @@ class Persistent:
 
 				try:
 					valueStorage.Set(valueObject, Version.Version(persistentValue[_lastChangeVersionKey]))
-				except Exception as e:
-					Debug.Log("Cannot set value '" + str(persistentValue[_valueKey]) + "' for persistent data '" + persistentKey + "'.\n" + Debug.FormatException(e), self.HostNamespace, Debug.LogLevels.Warning, group = self.HostNamespace, owner = __name__)
+				except:
+					Debug.Log("Cannot set value '" + str(persistentValue[_valueKey]) + "' for persistent data '" + persistentKey + "'.", self.HostNamespace, Debug.LogLevels.Warning, group = self.HostNamespace, owner = __name__)
 					persistentData.pop(persistentKey, None)
 					changed = True
 					continue
@@ -167,8 +167,8 @@ class Persistent:
 		for storageKey, storageValue in self._storage.items():  # type: str, _Value
 			try:
 				saveData[storageKey] = storageValue.Save()
-			except Exception as e:
-				Debug.Log("Failed to save value of '" + storageKey + "'. This entry may be reset the next time this persistent data is loaded.\n" + Debug.FormatException(e), self.HostNamespace, Debug.LogLevels.Warning, group = self.HostNamespace, owner = __name__)
+			except:
+				Debug.Log("Failed to save value of '" + storageKey + "'. This entry may be reset the next time this persistent data is loaded.", self.HostNamespace, Debug.LogLevels.Warning, group = self.HostNamespace, owner = __name__)
 				saveData.pop(storageKey)
 
 		if not os.path.exists(os.path.dirname(self.FilePath)):
@@ -194,7 +194,7 @@ class Persistent:
 		:param verify: This is called when changing or loading a value to verify that is correct and still valid.
 					   Verify functions need to take two parameters: the value being verified and the version the value was set.
 					   The first parameter will always be of the type specified in the 'valueType'. The value will often not be the current value of the persistent data.
-					   The second parameter will be the version this value was set. The type of this parameter will be NeonOcean.Main.Tools.Version.Version
+					   The second parameter will be the version this value was set. The type of this parameter will be NeonOcean.Order.Tools.Version.Version
 					   Verify functions should also return the input or a corrected value.
 					   If the value cannot be corrected the verify function should raise an exception, the persistent data may then revert to its default if necessary.
 		:type verify: typing.Callable
@@ -238,8 +238,8 @@ class Persistent:
 			try:
 				value = verify(dataValue)
 				version = dataVersion
-			except Exception as e:
-				Debug.Log("Verify callback found fault with the value that was stored for persistent data '" + key + "'.\n" + Debug.FormatException(e), self.HostNamespace, Debug.LogLevels.Warning, group = self.HostNamespace, owner = __name__)
+			except:
+				Debug.Log("Verify callback found fault with the value that was stored for persistent data '" + key + "'.", self.HostNamespace, Debug.LogLevels.Warning, group = self.HostNamespace, owner = __name__)
 				value = verifiedDefault
 				version = self.CurrentVersion
 		else:
@@ -265,7 +265,8 @@ class Persistent:
 
 	def Get (self, key: str):
 		"""
-		Gets the value of the persistent data specified by parameter key.
+		Gets the value of the persistent data specified by parameter key. The value returned will be a deep copy of what is stored, modifying it should never change
+		anything unless you set it with the set function.
 
 		:param key: The name of the persistent data, is case sensitive.
 		:type key: str
@@ -282,7 +283,8 @@ class Persistent:
 
 	def Set (self, key: str, value, autoSave: bool = True, autoUpdate: bool = True) -> None:
 		"""
-		Set the value of the persistent data specified by parameter key.
+		Set the value of the persistent data specified by parameter key. The value is deep copied before being but into storage, modifying the value after setting
+		it will not change the stored version.
 
 		:param key: The name of the persistent data, is case sensitive.
 		:type key: str

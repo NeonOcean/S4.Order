@@ -7,8 +7,6 @@ from NeonOcean.Order import Information, Paths
 from NeonOcean.Order.Tools import Exceptions, Version
 from sims4 import log
 
-ModFileName = Information.Author + "-Mod.json"  # type: str
-
 _allMods = list()  # type: typing.List[Mod]
 
 class Mod:
@@ -21,7 +19,7 @@ class Mod:
 		:param name: The actual name of the mod. This will be used as the name of the attribute in this module that points to this mod.
 		:type name: str
 		:param loadController: The namespace of the mod that can load this mod.
-		:type loadController: str
+		:type loadController: typing.Optional[str]
 		:param filePath: The file path of the mod information file.
 		:type filePath: str
 		"""
@@ -32,15 +30,15 @@ class Mod:
 		if not isinstance(name, str):
 			raise Exceptions.IncorrectTypeException(name, "name", (str,))
 
-		if not isinstance(loadController, str):
-			raise Exceptions.IncorrectTypeException(loadController, "loadController", (str,))
+		if not isinstance(loadController, str) and loadController is not None:
+			raise Exceptions.IncorrectTypeException(loadController, "loadController", (str, "None"))
 
 		if not isinstance(filePath, str):
 			raise Exceptions.IncorrectTypeException(filePath, "filePath", (str,))
 
 		self.Namespace = namespace  # type: str
 		self.Name = name  # type: str
-		self.LoadController = loadController  # type: str
+		self.LoadController = loadController  # type: typing.Optional[str]
 		self.FilePath = filePath  # type: str
 
 		self.Author = None  # type: typing.Optional[str]
@@ -67,12 +65,54 @@ class Mod:
 
 		_allMods.append(self)
 
+	def IsLoaded (self) -> bool:
+		"""
+		Whether or not this mod is currently loaded.
+		:rtype: bool
+		"""
+
+		return self.ReadInformation and \
+			   self.Imported and \
+			   self.Initiated and \
+			   self.Started
+
+	def RequirementsLoaded (self) -> bool:
+		"""
+		Whether or not this mod's requirements are all currently loaded.
+		:rtype: bool
+		"""
+
+		loadedRequirements = 0  # type: int
+
+		for requirement in self.Requirements:
+			for mod in GetAllMods():  # type: Mod
+				if mod.Namespace == requirement:
+					if not mod.IsLoaded():
+						return False
+
+					loadedRequirements += 1
+
+		if len(self.Requirements) != loadedRequirements:
+			return False
+
+		return True
+
 	def ControlsLoading (self, hostNamespace: str) -> bool:
+		"""
+		Whether or not the host controls the mod's loading.
+		:param hostNamespace: The namespace of the mod that will be doing the loading
+		:type hostNamespace: str
+		:rtype: bool
+		"""
+
+		if self.LoadController is None:
+			return False
+
 		return self.LoadController == hostNamespace
 
 	def IsLoadable (self, hostNamespace: str) -> bool:
 		"""
-		Whether or not this mod can ever be loaded by the host.
+		Whether or not this mod can ever be loaded by the host. This returns false if the mod is blocked and if the mod is not controlled by the host.
 		:param hostNamespace: The namespace of the mod that will be doing the loading
 		:type hostNamespace: str
 		:rtype: bool
@@ -121,33 +161,11 @@ class Mod:
 		return self.IsUnloadable(hostNamespace) and \
 			   self.Imported
 
-	def IsLoaded (self) -> bool:
-		return self.ReadInformation and \
-			   self.Imported and \
-			   self.Initiated and \
-			   self.Started
-
-	def RequirementsLoaded (self) -> bool:
-		loadedRequirements = 0  # type: int
-
-		for requirement in self.Requirements:
-			for mod in GetAllMods():  # type: Mod
-				if mod.Namespace == requirement:
-					if not mod.IsLoaded():
-						return False
-
-					loadedRequirements += 1
-
-		if len(self.Requirements) != loadedRequirements:
-			return False
-
-		return True
-
 class Compatibility:
-	def __init__ (self, namespace: str, lowestVersion: Version.Version, highestVersion: Version.Version):
+	def __init__ (self, namespace: str, lowestVersion: typing.Optional[Version.Version], highestVersion: typing.Optional[Version.Version]):
 		self.Namespace = namespace  # type: str
-		self.LowestVersion = lowestVersion  # type: Version.Version
-		self.HighestVersion = highestVersion  # type: Version.Version
+		self.LowestVersion = lowestVersion  # type: typing.Optional[Version.Version]
+		self.HighestVersion = highestVersion  # type: typing.Optional[Version.Version]
 
 class Rating(enum.Int):
 	Normal = 0  # type: Rating
@@ -174,16 +192,18 @@ def GetAllMods () -> typing.List[Mod]:
 def _Setup () -> None:
 	for directoryRoot, directoryNames, fileNames in os.walk(Paths.ModsPath):  # type: str, list, list
 		for fileName in fileNames:  # type: str
+			fileNameLower = fileName.lower()  # type: str
+
 			modFilePath = os.path.join(directoryRoot, fileName)  # type: str
 
 			try:
-				if fileName.lower() == ModFileName.lower():
+				if os.path.splitext(fileNameLower)[1] == ".json" and fileNameLower.startswith((Information.RootNamespace + "-mod").lower()):
 					with open(modFilePath) as modFile:
 						modInformation = json.JSONDecoder().decode(modFile.read())  # type: dict
 
 					modNamespace = modInformation["Namespace"]  # type: str
 					modName = modInformation["Name"]  # type: str
-					modLoadControl = modInformation["Load Controller"]  # type: str
+					modLoadControl = modInformation.get("LoadController")  # type: typing.Optional[str]
 
 					duplicateMod = False  # type: bool
 

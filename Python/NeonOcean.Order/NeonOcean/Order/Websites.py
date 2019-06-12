@@ -15,7 +15,7 @@ def GetNODocumentationModURL (mod: Mods.Mod) -> str:
 	return GetNODocumentationURL() + "/s4/" + mod.Name.lower()
 
 def GetNODocumentationSettingURL (setting: typing.Type[SettingsShared.SettingBase], mod: Mods.Mod) -> str:
-	return GetNODocumentationModURL(mod) + "/settings/" + setting.DocumentationPage
+	return GetNODocumentationModURL(mod) + "/settings/" + setting.Key.replace("_", "-")
 
 def GetNOSupportURL () -> str:
 	return _noSupportBaseURL

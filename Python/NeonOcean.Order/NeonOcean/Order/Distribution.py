@@ -25,7 +25,9 @@ PromotionDefaultButton = Language.String(This.Mod.Namespace + ".System.Distribut
 
 _distributionURL = "http://dist.mods.neonoceancreations.com"  # type: str
 
-_ticker = None  # type: Timer.Timer
+_updatesTicker = None  # type: Timer.Timer
+_promotionsTicker = None  # type: Timer.Timer
+
 _tickerInterval = 1800  # type: int
 
 _shownReleaseVersions = dict()  # type: typing.Dict[Mods.Mod, typing.List[Version.Version]]
@@ -36,17 +38,22 @@ _showedPromotion = False  # type: bool
 _shownPromotionsFilePath = os.path.join(Paths.PersistentPath, Information.GlobalNamespace, "ShownPromotions.json")  # type: str
 _shownPromotions = list()  # type: typing.List[str]
 
-class _Announcer(Director.Controller):
+class _Announcer(Director.Announcer):
 	Host = This.Mod
 
 	@classmethod
 	def OnLoadingScreenAnimationFinished (cls, zoneReference: zone.Zone) -> None:
-		global _ticker
+		global _updatesTicker, _promotionsTicker
 
-		if _ticker is None:
-			if not Mods.IsInstalled("NeonOcean.Main"):
-				startDistributionTimer = Timer.Timer(15, _StartDistributionThread)  # type: Timer.Timer
-				startDistributionTimer.start()
+		if not Mods.IsInstalled("NeonOcean.Main"):
+			if _updatesTicker is None:
+				startUpdatesDistributionTimer = Timer.Timer(15, _StartUpdatesDistributionThread)  # type: Timer.Timer
+				startUpdatesDistributionTimer.start()
+
+			if _promotionsTicker is None:
+				startPromotionsDistributionTimer = Timer.Timer(20, _StartPromotionsDistributionThread)  # type: Timer.Timer
+				startPromotionsDistributionTimer.start()
+
 
 class _FilterTypes(enum.Int):
 	Whitelist = 0  # type: _FilterTypes
@@ -76,8 +83,8 @@ class _Promotion:
 
 		try:
 			self.TargetsType = Parse.ParseEnum(targetsTypeString, _FilterTypes)  # type: _FilterTypes
-		except Exception as e:
-			Debug.Log("Failed to parse target filter type from '" + targetsTypeString + "'. Promotion: " + self.Identifier + "\n" + Debug.FormatException(e), This.Mod.Namespace, Debug.LogLevels.Warning, group = This.Mod.Namespace, owner = __name__)
+		except:
+			Debug.Log("Failed to parse target filter type from '" + targetsTypeString + "'. Promotion: " + self.Identifier, This.Mod.Namespace, Debug.LogLevels.Warning, group = This.Mod.Namespace, owner = __name__)
 			self.TargetsType = _FilterTypes.Whitelist
 
 		self.Mods = promotionDictionary.get("Mods", list())  # type: list
@@ -100,16 +107,16 @@ class _Promotion:
 
 		try:
 			self.ModsType = Parse.ParseEnum(modsTypeString, _FilterTypes)  # type: _FilterTypes
-		except Exception as e:
-			Debug.Log("Failed to parse mod filter type from '" + modsTypeString + "'. Promotion: " + self.Identifier + "\n" + Debug.FormatException(e), This.Mod.Namespace, Debug.LogLevels.Warning, group = This.Mod.Namespace, owner = __name__)
+		except:
+			Debug.Log("Failed to parse mod filter type from '" + modsTypeString + "'. Promotion: " + self.Identifier, This.Mod.Namespace, Debug.LogLevels.Warning, group = This.Mod.Namespace, owner = __name__)
 			self.ModsType = _FilterTypes.Whitelist
 
 		ratingString = promotionDictionary.get("Rating", Mods.Rating.Normal.name)  # type: str
 
 		try:
 			self.Rating = Parse.ParseEnum(ratingString, Mods.Rating)  # type: Mods.Rating
-		except Exception as e:
-			Debug.Log("Failed to parse rating type from '" + ratingString + "'. Promotion: " + self.Identifier + "\n" + Debug.FormatException(e), This.Mod.Namespace, Debug.LogLevels.Warning, group = This.Mod.Namespace, owner = __name__)
+		except:
+			Debug.Log("Failed to parse rating type from '" + ratingString + "'. Promotion: " + self.Identifier, This.Mod.Namespace, Debug.LogLevels.Warning, group = This.Mod.Namespace, owner = __name__)
 			self.Rating = Mods.Rating.Normal
 
 		self.Link = promotionDictionary.get("Link")  # type: typing.Optional[str]
@@ -201,35 +208,47 @@ def _Setup () -> None:
 		except Exception as e:
 			Debug.Log("Failed to read shown promotions file.", This.Mod.Namespace, Debug.LogLevels.Exception, group = This.Mod.Namespace, owner = __name__, exception = e)
 
-def _StartDistributionThread () -> None:
-	global _ticker
+def _StartUpdatesDistributionThread () -> None:
+	global _updatesTicker
 
-	if _ticker is None:
-		checkThread = threading.Thread(target = _CheckDistribution)  # type: threading.Thread
-		checkThread.setDaemon(True)
-		checkThread.start()
+	if _updatesTicker is None:
+		checkUpdatesThread = threading.Thread(target = _CheckUpdatesDistribution)  # type: threading.Thread
+		checkUpdatesThread.setDaemon(True)
+		checkUpdatesThread.start()
 
-		_ticker = Timer.Timer(_tickerInterval, _CheckDistribution)
-		_ticker.start()
+		_updatesTicker = Timer.Timer(_tickerInterval, _CheckUpdatesDistribution)
+		_updatesTicker.start()
 
-def _CheckDistribution () -> None:
+def _StartPromotionsDistributionThread () -> None:
+	global _promotionsTicker
+
+	if _promotionsTicker is None:
+		checkPromotionsThread = threading.Thread(target = _CheckPromotionsDistribution)  # type: threading.Thread
+		checkPromotionsThread.setDaemon(True)
+		checkPromotionsThread.start()
+
+		_promotionsTicker = Timer.Timer(_tickerInterval, _CheckPromotionsDistribution)
+		_promotionsTicker.start()
+
+def _CheckUpdatesDistribution () -> None:
 	try:
 		_CheckUpdates()
-	except Exception as e:
-		Debug.Log("Failed to check for updates.\n" + Debug.FormatException(e), This.Mod.Namespace, Debug.LogLevels.Warning, group = This.Mod.Namespace, owner = __name__)
+	except:
+		Debug.Log("Failed to check for updates.", This.Mod.Namespace, Debug.LogLevels.Warning, group = This.Mod.Namespace, owner = __name__)
 
+def _CheckPromotionsDistribution () -> None:
 	try:
 		if not _showedPromotion:
-			_CheckPromos()
-	except Exception as e:
-		Debug.Log("Failed to check for promotions.\n" + Debug.FormatException(e), This.Mod.Namespace, Debug.LogLevels.Warning, group = This.Mod.Namespace, owner = __name__)
+			_CheckPromotions()
+	except:
+		Debug.Log("Failed to check for promotions.", This.Mod.Namespace, Debug.LogLevels.Warning, group = This.Mod.Namespace, owner = __name__)
 
 def _CheckUpdates () -> None:
 	previewAvailableMods = list()  # type: typing.List[typing.Tuple[Mods.Mod, Version.Version]]
 	releaseAvailableMods = list()  # type: typing.List[typing.Tuple[Mods.Mod, Version.Version]]
 
-	distributeUpdates = Settings.Check_For_Updates.Get()  # type: bool
-	distributePreviewUpdates = Settings.Check_For_Preview_Updates.Get()  # type: bool
+	distributeUpdates = Settings.CheckForUpdates.Get()  # type: bool
+	distributePreviewUpdates = Settings.CheckForPreviewUpdates.Get()  # type: bool
 
 	if not distributeUpdates:
 		return
@@ -238,15 +257,18 @@ def _CheckUpdates () -> None:
 
 	try:
 		latestDictionary = _ReadVersionFile(latestURL)  # type: typing.Dict[str, typing.Dict[str, Version.Version]]
-	except Exception as e:
-		Debug.Log("Failed to get mod versions.\n" + Debug.FormatException(e), This.Mod.Namespace, Debug.LogLevels.Warning, group = This.Mod.Namespace, owner = __name__)
+	except:
+		Debug.Log("Failed to get mod versions.", This.Mod.Namespace, Debug.LogLevels.Warning, group = This.Mod.Namespace, owner = __name__)
 		return
 
 	for mod in Mods.GetAllMods():  # type: Mods.Mod
 		if not mod.ReadInformation:
 			continue
 
-		if mod.Distribution != Information.Author:
+		if mod.Distribution is None:
+			continue
+
+		if mod.Distribution != Information.RootNamespace:
 			continue
 
 		modShownReleaseVersions = _shownReleaseVersions.get(mod)  # type: list
@@ -297,25 +319,25 @@ def _CheckUpdates () -> None:
 						releaseAvailableMods.append((mod, releaseVersion))
 						continue
 
-		except Exception as e:
-			Debug.Log("Failed to get update information for '" + mod.Namespace + "'.\n" + Debug.FormatException(e), This.Mod.Namespace, Debug.LogLevels.Warning, group = This.Mod.Namespace, owner = __name__)
+		except:
+			Debug.Log("Failed to get update information for '" + mod.Namespace + "'.", This.Mod.Namespace, Debug.LogLevels.Warning, group = This.Mod.Namespace, owner = __name__)
 
 	for releaseTuple in releaseAvailableMods:  # type: typing.Tuple[Mods.Mod, Version.Version]
 		try:
 			_ShowReleaseUpdateNotification(releaseTuple[0], releaseTuple[1])
-		except Exception as e:
-			Debug.Log("Failed to show release update notification for '" + releaseTuple[0].Namespace + "'.\n" + Debug.FormatException(e), This.Mod.Namespace, Debug.LogLevels.Warning, group = This.Mod.Namespace, owner = __name__)
+		except:
+			Debug.Log("Failed to show release update notification for '" + releaseTuple[0].Namespace + "'.", This.Mod.Namespace, Debug.LogLevels.Warning, group = This.Mod.Namespace, owner = __name__)
 
 	for previewTuple in previewAvailableMods:  # type: typing.Tuple[Mods.Mod, Version.Version]
 		try:
 			_ShowPreviewUpdateNotification(previewTuple[0], previewTuple[1])
-		except Exception as e:
-			Debug.Log("Failed to show release update notification for '" + previewTuple[0].Namespace + "'.\n" + Debug.FormatException(e), This.Mod.Namespace, Debug.LogLevels.Warning, group = This.Mod.Namespace, owner = __name__)
+		except:
+			Debug.Log("Failed to show release update notification for '" + previewTuple[0].Namespace + "'.", This.Mod.Namespace, Debug.LogLevels.Warning, group = This.Mod.Namespace, owner = __name__)
 
-def _CheckPromos () -> None:
+def _CheckPromotions () -> None:
 	global _showedPromotion
 
-	showPromotions = Settings.Show_Promotions.Get()  # type: bool
+	showPromotions = Settings.ShowPromotions.Get()  # type: bool
 
 	if not showPromotions:
 		return
@@ -323,9 +345,9 @@ def _CheckPromos () -> None:
 	promotionsURL = _distributionURL + "/promotions/promotions.json"  # type: str
 
 	try:
-		promotionsList = _ReadPromotionFile(promotionsURL)  # type: typing.List[dict]
-	except Exception as e:
-		Debug.Log("Failed to get promotions.\n" + Debug.FormatException(e), This.Mod.Namespace, Debug.LogLevels.Warning, group = This.Mod.Namespace, owner = __name__)
+		promotionsList = _ReadPromotionsFile(promotionsURL)  # type: typing.List[dict]
+	except:
+		Debug.Log("Failed to get promotions.", This.Mod.Namespace, Debug.LogLevels.Warning, group = This.Mod.Namespace, owner = __name__)
 		return
 
 	validPromotions = list()  # type: typing.List[_Promotion]
@@ -343,8 +365,8 @@ def _CheckPromos () -> None:
 
 	try:
 		_ShowPromotionNotification(chosenPromotion)
-	except Exception as e:
-		Debug.Log("Failed to show promotion notification for promotion '" + chosenPromotion.Identifier + "'.\n" + Debug.FormatException(e), This.Mod.Namespace, Debug.LogLevels.Warning, group = This.Mod.Namespace, owner = __name__)
+	except:
+		Debug.Log("Failed to show promotion notification for promotion '" + chosenPromotion.Identifier + "'.", This.Mod.Namespace, Debug.LogLevels.Warning, group = This.Mod.Namespace, owner = __name__)
 		return
 
 	_showedPromotion = True
@@ -358,8 +380,8 @@ def _CheckPromos () -> None:
 
 		with open(_shownPromotionsFilePath, "w+") as shownPromotionsFile:
 			shownPromotionsFile.write(json.JSONEncoder(indent = "\t").encode(_shownPromotions))
-	except Exception as e:
-		Debug.Log("Failed to write shown promotions to a file.\n" + Debug.FormatException(e), This.Mod.Namespace, Debug.LogLevels.Warning, group = This.Mod.Namespace, owner = __name__)
+	except:
+		Debug.Log("Failed to write shown promotions to a file.", This.Mod.Namespace, Debug.LogLevels.Warning, group = This.Mod.Namespace, owner = __name__)
 		return
 
 def _ReadVersionFile (versionsFileURL: str) -> typing.Dict[str, typing.Dict[str, Version.Version]]:
@@ -392,7 +414,7 @@ def _ReadVersionFile (versionsFileURL: str) -> typing.Dict[str, typing.Dict[str,
 
 	return versionDictionary
 
-def _ReadPromotionFile (promotionsFileURL: str) -> typing.List[dict]:
+def _ReadPromotionsFile (promotionsFileURL: str) -> typing.List[dict]:
 	with request.urlopen(promotionsFileURL) as promotionsFile:  # type: client.HTTPResponse
 		promotionsListString = promotionsFile.read().decode("utf-8")  # type: str
 
@@ -422,7 +444,7 @@ def _ReadPromotionFile (promotionsFileURL: str) -> typing.List[dict]:
 	return promotionsList
 
 def _ShowReleaseUpdateNotification (mod: Mods.Mod, version: Version.Version) -> None:
-	updateURL = Websites.GetNODocumentationModURL(mod)  # type: str
+	updateURL = Websites.GetNOMainModURL(mod)  # type: str
 
 	showUpdateResponseCommand = collections.make_immutable_slots_class(("command", "arguments"))
 

@@ -72,7 +72,7 @@ class BasicRegistrationExtension(RegistrationExtension):
 			if objectReference.guid64 in cls.BasicObjectRegistrationIDs:
 				RegisterObjectInteraction(cls, objectReference)
 
-class _AnnouncerReliable(Director.Controller):
+class _AnnouncerReliable(Director.Announcer):
 	Host = This.Mod
 	Reliable = True  # type: bool
 
@@ -110,8 +110,8 @@ class _AnnouncerReliable(Director.Controller):
 			if interactionReference.ObjectRegistrationTargeting.RegisterCustom:
 				try:
 					interactionReference.RegisterCustomObjectTargets(objectReferences)
-				except Exception as e:
-					Debug.Log("Failed to call 'RegisterCustomObjectTargets' for an interaction with the class '" + Types.GetFullName(interactionReference) + "'.", This.Mod.Namespace, Debug.LogLevels.Exception, group = This.Mod.Namespace, owner = __name__, exception = e)
+				except:
+					Debug.Log("Failed to call 'RegisterCustomObjectTargets' for an interaction with the class '" + Types.GetFullName(interactionReference) + "'.", This.Mod.Namespace, Debug.LogLevels.Exception, group = This.Mod.Namespace, owner = __name__)
 
 def RegisterAllObjectsInteraction (interactionReference: typing.Type) -> None:
 	# noinspection PyProtectedMember

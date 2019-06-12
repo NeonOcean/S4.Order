@@ -33,8 +33,8 @@ class Level:
 			for module in modules:  # type: str
 				try:
 					importer.load_module(module)
-				except Exception as e:
-					Debug.Log("Failed to import module '" + module + "'.", This.Mod.Namespace, Debug.LogLevels.Exception, group = This.Mod.Namespace, owner = __name__, exception = e)
+				except:
+					Debug.Log("Failed to import module '" + module + "'.", This.Mod.Namespace, Debug.LogLevels.Exception, group = This.Mod.Namespace, owner = __name__)
 
 			_loadedPaths.append(path)
 
@@ -69,8 +69,8 @@ class Level:
 				if callObject is not None:
 					callObject(*Arguments, **KeywordArguments)
 
-			except Exception as e:
-				Debug.Log("Failed to call function: '" + moduleName + "." + functionName + "'.", This.Mod.Namespace, Debug.LogLevels.Exception, group = This.Mod.Namespace, owner = __name__, exception = e)
+			except:
+				Debug.Log("Failed to call function: '" + moduleName + "." + functionName + "'.", This.Mod.Namespace, Debug.LogLevels.Exception, group = This.Mod.Namespace, owner = __name__)
 
 class _Importer:
 	def __init__ (self):
@@ -218,8 +218,8 @@ def _GetLevels () -> typing.List[Level]:
 					try:
 						with open(orderFilePath) as orderFile:
 							orderInformation = json.JSONDecoder().decode(orderFile.read())  # type: typing.List[dict]
-					except Exception as e:
-						Debug.Log("Failed to read load order file '" + Paths.StripUserDataPath(os.path.join(directoryRoot, fileName)) + "'.", This.Mod.Namespace, Debug.LogLevels.Exception, group = This.Mod.Namespace, owner = __name__, exception = e)
+					except:
+						Debug.Log("Failed to read load order file '" + Paths.StripUserDataPath(os.path.join(directoryRoot, fileName)) + "'.", This.Mod.Namespace, Debug.LogLevels.Exception, group = This.Mod.Namespace, owner = __name__)
 						continue
 
 					if not isinstance(orderInformation, list):
@@ -341,8 +341,8 @@ def _GetLevels () -> typing.List[Level]:
 
 							if not matchedLevel:
 								levels.append(Level(levelLevelValue, levelPathsValue, levelFunctionsValue))
-				except Exception as e:
-					Debug.Log("Encountered a problem while reading load order file '" + Paths.StripUserDataPath(os.path.join(directoryRoot, fileName)) + "'.", This.Mod.Namespace, Debug.LogLevels.Exception, group = This.Mod.Namespace, owner = __name__, exception = e)
+				except:
+					Debug.Log("Encountered a problem while reading load order file '" + Paths.StripUserDataPath(os.path.join(directoryRoot, fileName)) + "'.", This.Mod.Namespace, Debug.LogLevels.Exception, group = This.Mod.Namespace, owner = __name__)
 
 	return _SortLevels(levels)
 
@@ -419,8 +419,8 @@ def _GetModules (path: pathlib.Path) -> list:
 						modules.append(fileRelativePath.replace("/", ".").replace("\\", "."))
 		else:
 			raise Exception("Invalid path.")
-	except Exception as e:
-		Debug.Log("Failed to get modules in '" + Paths.StripUserDataPath(str(path)) + "'.", This.Mod.Namespace, Debug.LogLevels.Exception, group = This.Mod.Namespace, owner = __name__, exception = e)
+	except:
+		Debug.Log("Failed to get modules in '" + Paths.StripUserDataPath(str(path)) + "'.", This.Mod.Namespace, Debug.LogLevels.Exception, group = This.Mod.Namespace, owner = __name__)
 
 	return modules
 

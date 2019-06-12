@@ -8,15 +8,20 @@ from ui import ui_dialog, ui_dialog_notification
 
 _queue = list()  # type: typing.List[ui_dialog.UiDialogBase]
 
-class _Announcer(Director.Controller):
+class _Announcer(Director.Announcer):
 	Host = This.Mod
 
 	@classmethod
 	def OnLoadingScreenAnimationFinished (cls, zoneReference: zone.Zone) -> None:
 		global _queue
 
+		from NeonOcean.Order import Debug
+
 		for dialog in _queue:  # type: ui_dialog.UiDialogBase
-			dialog.show_dialog()
+			try:
+				dialog.show_dialog()
+			except:
+				Debug.Log("Failed to show a queued notification.", This.Mod.Namespace, Debug.LogLevels.Exception, group = This.Mod.Namespace, owner = __name__)
 
 		_queue = list()
 
