@@ -10,7 +10,7 @@ from sims4 import log
 _allMods = list()  # type: typing.List[Mod]
 
 class Mod:
-	def __init__ (self, namespace: str, name: str, loadController: str, filePath: str):
+	def __init__ (self, namespace: str, name: str, loadController: str, informationFilePath: str):
 		"""
 		A container for mod information.
 
@@ -20,8 +20,8 @@ class Mod:
 		:type name: str
 		:param loadController: The namespace of the mod that can load this mod.
 		:type loadController: typing.Optional[str]
-		:param filePath: The file path of the mod information file.
-		:type filePath: str
+		:param informationFilePath: The file path of the mod information file.
+		:type informationFilePath: str
 		"""
 
 		if not isinstance(namespace, str):
@@ -33,16 +33,19 @@ class Mod:
 		if not isinstance(loadController, str) and loadController is not None:
 			raise Exceptions.IncorrectTypeException(loadController, "loadController", (str, "None"))
 
-		if not isinstance(filePath, str):
-			raise Exceptions.IncorrectTypeException(filePath, "filePath", (str,))
+		if not isinstance(informationFilePath, str):
+			raise Exceptions.IncorrectTypeException(informationFilePath, "informationFilePath", (str,))
 
 		self.Namespace = namespace  # type: str
 		self.Name = name  # type: str
 		self.LoadController = loadController  # type: typing.Optional[str]
-		self.FilePath = filePath  # type: str
+
+		self.InformationFilePath = informationFilePath  # type: str
+		self.InformationFileDirectoryPath = os.path.dirname(self.InformationFilePath)  # type: str
 
 		self.Author = None  # type: typing.Optional[str]
 		self.Version = None  # type: typing.Optional[Version.Version]
+		self.VersionDisplay = None  # type: typing.Optional[str]
 		self.Distribution = None  # type: typing.Optional[str]
 		self.Rating = Rating.Normal  # type: Rating
 
@@ -147,7 +150,6 @@ class Mod:
 		"""
 
 		return self.ControlsLoading(hostNamespace)
-		pass
 
 	# noinspection SpellCheckingInspection
 	def IsCurrentlyUnloadable (self, hostNamespace: str) -> bool:
@@ -223,4 +225,9 @@ def _Setup () -> None:
 
 _Setup()
 
+Choreography: Mod
+Cycle: Mod
+Debug: Mod
+Main: Mod
 Order: Mod
+Time: Mod

@@ -83,7 +83,7 @@ class _Promotion:
 
 		try:
 			self.TargetsType = Parse.ParseEnum(targetsTypeString, _FilterTypes)  # type: _FilterTypes
-		except:
+		except Exception:
 			Debug.Log("Failed to parse target filter type from '" + targetsTypeString + "'. Promotion: " + self.Identifier, This.Mod.Namespace, Debug.LogLevels.Warning, group = This.Mod.Namespace, owner = __name__)
 			self.TargetsType = _FilterTypes.Whitelist
 
@@ -107,7 +107,7 @@ class _Promotion:
 
 		try:
 			self.ModsType = Parse.ParseEnum(modsTypeString, _FilterTypes)  # type: _FilterTypes
-		except:
+		except Exception:
 			Debug.Log("Failed to parse mod filter type from '" + modsTypeString + "'. Promotion: " + self.Identifier, This.Mod.Namespace, Debug.LogLevels.Warning, group = This.Mod.Namespace, owner = __name__)
 			self.ModsType = _FilterTypes.Whitelist
 
@@ -115,7 +115,7 @@ class _Promotion:
 
 		try:
 			self.Rating = Parse.ParseEnum(ratingString, Mods.Rating)  # type: Mods.Rating
-		except:
+		except Exception:
 			Debug.Log("Failed to parse rating type from '" + ratingString + "'. Promotion: " + self.Identifier, This.Mod.Namespace, Debug.LogLevels.Warning, group = This.Mod.Namespace, owner = __name__)
 			self.Rating = Mods.Rating.Normal
 
@@ -206,7 +206,7 @@ def _Setup () -> None:
 
 				_shownPromotions = shownPromotions
 		except Exception as e:
-			Debug.Log("Failed to read shown promotions file.", This.Mod.Namespace, Debug.LogLevels.Exception, group = This.Mod.Namespace, owner = __name__, exception = e)
+			Debug.Log("Failed to read shown promotions file.", This.Mod.Namespace, Debug.LogLevels.Warning, group = This.Mod.Namespace, owner = __name__, exception = e)
 
 def _StartUpdatesDistributionThread () -> None:
 	global _updatesTicker
@@ -233,14 +233,14 @@ def _StartPromotionsDistributionThread () -> None:
 def _CheckUpdatesDistribution () -> None:
 	try:
 		_CheckUpdates()
-	except:
+	except Exception:
 		Debug.Log("Failed to check for updates.", This.Mod.Namespace, Debug.LogLevels.Warning, group = This.Mod.Namespace, owner = __name__)
 
 def _CheckPromotionsDistribution () -> None:
 	try:
 		if not _showedPromotion:
 			_CheckPromotions()
-	except:
+	except Exception:
 		Debug.Log("Failed to check for promotions.", This.Mod.Namespace, Debug.LogLevels.Warning, group = This.Mod.Namespace, owner = __name__)
 
 def _CheckUpdates () -> None:
@@ -257,7 +257,7 @@ def _CheckUpdates () -> None:
 
 	try:
 		latestDictionary = _ReadVersionFile(latestURL)  # type: typing.Dict[str, typing.Dict[str, Version.Version]]
-	except:
+	except Exception:
 		Debug.Log("Failed to get mod versions.", This.Mod.Namespace, Debug.LogLevels.Warning, group = This.Mod.Namespace, owner = __name__)
 		return
 
@@ -319,19 +319,19 @@ def _CheckUpdates () -> None:
 						releaseAvailableMods.append((mod, releaseVersion))
 						continue
 
-		except:
+		except Exception:
 			Debug.Log("Failed to get update information for '" + mod.Namespace + "'.", This.Mod.Namespace, Debug.LogLevels.Warning, group = This.Mod.Namespace, owner = __name__)
 
 	for releaseTuple in releaseAvailableMods:  # type: typing.Tuple[Mods.Mod, Version.Version]
 		try:
 			_ShowReleaseUpdateNotification(releaseTuple[0], releaseTuple[1])
-		except:
+		except Exception:
 			Debug.Log("Failed to show release update notification for '" + releaseTuple[0].Namespace + "'.", This.Mod.Namespace, Debug.LogLevels.Warning, group = This.Mod.Namespace, owner = __name__)
 
 	for previewTuple in previewAvailableMods:  # type: typing.Tuple[Mods.Mod, Version.Version]
 		try:
 			_ShowPreviewUpdateNotification(previewTuple[0], previewTuple[1])
-		except:
+		except Exception:
 			Debug.Log("Failed to show release update notification for '" + previewTuple[0].Namespace + "'.", This.Mod.Namespace, Debug.LogLevels.Warning, group = This.Mod.Namespace, owner = __name__)
 
 def _CheckPromotions () -> None:
@@ -346,7 +346,7 @@ def _CheckPromotions () -> None:
 
 	try:
 		promotionsList = _ReadPromotionsFile(promotionsURL)  # type: typing.List[dict]
-	except:
+	except Exception:
 		Debug.Log("Failed to get promotions.", This.Mod.Namespace, Debug.LogLevels.Warning, group = This.Mod.Namespace, owner = __name__)
 		return
 
@@ -365,7 +365,7 @@ def _CheckPromotions () -> None:
 
 	try:
 		_ShowPromotionNotification(chosenPromotion)
-	except:
+	except Exception:
 		Debug.Log("Failed to show promotion notification for promotion '" + chosenPromotion.Identifier + "'.", This.Mod.Namespace, Debug.LogLevels.Warning, group = This.Mod.Namespace, owner = __name__)
 		return
 
@@ -380,7 +380,7 @@ def _CheckPromotions () -> None:
 
 		with open(_shownPromotionsFilePath, "w+") as shownPromotionsFile:
 			shownPromotionsFile.write(json.JSONEncoder(indent = "\t").encode(_shownPromotions))
-	except:
+	except Exception:
 		Debug.Log("Failed to write shown promotions to a file.", This.Mod.Namespace, Debug.LogLevels.Warning, group = This.Mod.Namespace, owner = __name__)
 		return
 
@@ -399,7 +399,7 @@ def _ReadVersionFile (versionsFileURL: str) -> typing.Dict[str, typing.Dict[str,
 
 		for mod, modLatest in versionDictionary.items():  # type: str, typing.Dict[str, typing.Any]
 			if not isinstance(mod, str):
-				raise Exceptions.IncorrectTypeException(mod, "Root[Key]", (str,))
+				raise Exceptions.IncorrectTypeException(mod, "Root<Key>", (str,))
 
 			if not isinstance(modLatest, dict):
 				raise Exceptions.IncorrectTypeException(mod, "Root[%s]" % mod, (dict,))

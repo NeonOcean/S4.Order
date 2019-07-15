@@ -9,7 +9,7 @@ def ParseNumber (string: str) -> typing.Union[int, float]:
 
 	try:
 		return int(string)
-	except:
+	except Exception:
 		return float(string)
 
 def ParseBool (string: str) -> bool:

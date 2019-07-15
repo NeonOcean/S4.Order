@@ -27,7 +27,7 @@ def StripUserDataPath (filePath: str) -> str:
 		filePathObject = pathlib.Path(filePath)  # type: pathlib.Path
 
 		return str(filePathObject.relative_to(userDataPathObject))
-	except:
+	except Exception:
 		return filePath
 
 def _GetModuleRootPath () -> str:

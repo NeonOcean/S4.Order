@@ -18,6 +18,18 @@ Importing = False  # type: bool
 
 _loadedPaths = list()  # type: typing.List[pathlib.Path]
 
+_levelKey = "Level"  # type: str
+_pathsKey = "Paths"  # type: str
+_functionsKey = "Functions"  # type: str
+
+_pathsRootKey = "Root"  # type: str
+_pathsPathKey = "Path"  # type: str
+
+_functionsModuleKey = "Module"  # type: str
+_functionsFunctionKey = "Function"  # type: str
+_functionsArgumentKey = "Arguments"  # type: str
+_functionsKeywordArgumentsKey = "KeywordArguments"  # type: str
+
 class Level:
 	def __init__ (self, level: typing.Union[int, float], paths: typing.List[pathlib.Path], functions: typing.List[dict]):
 		self.Level = level  # type: typing.Union[int, float]
@@ -31,19 +43,25 @@ class Level:
 			modules = _GetModules(path)  # type: list
 
 			for module in modules:  # type: str
-				try:
-					importer.load_module(module)
-				except:
-					Debug.Log("Failed to import module '" + module + "'.", This.Mod.Namespace, Debug.LogLevels.Exception, group = This.Mod.Namespace, owner = __name__)
+				if module.endswith(".__init__"):
+					try:
+						importer.load_module(module[:-len(".__init__")])
+					except Exception:
+						Debug.Log("Failed to import module '" + module + "'.", This.Mod.Namespace, Debug.LogLevels.Exception, group = This.Mod.Namespace, owner = __name__)
+				else:
+					try:
+						importer.load_module(module)
+					except Exception:
+						Debug.Log("Failed to import module '" + module + "'.", This.Mod.Namespace, Debug.LogLevels.Exception, group = This.Mod.Namespace, owner = __name__)
 
 			_loadedPaths.append(path)
 
 	def CallFunctions (self) -> None:
 		for functionDictionary in self.Functions:  # type: dict
-			moduleName = functionDictionary["Module"]  # type: str
-			functionName = functionDictionary["Function"]  # type: str
-			Arguments = functionDictionary["Arguments"]  # type: list
-			KeywordArguments = functionDictionary["Keyword Arguments"]  # type: dict
+			moduleName = functionDictionary[_functionsModuleKey]  # type: str
+			functionName = functionDictionary[_functionsFunctionKey]  # type: str
+			Arguments = functionDictionary[_functionsArgumentKey]  # type: list
+			KeywordArguments = functionDictionary[_functionsKeywordArgumentsKey]  # type: dict
 	
 			try:
 				if not moduleName in sys.modules:
@@ -69,7 +87,7 @@ class Level:
 				if callObject is not None:
 					callObject(*Arguments, **KeywordArguments)
 
-			except:
+			except Exception:
 				Debug.Log("Failed to call function: '" + moduleName + "." + functionName + "'.", This.Mod.Namespace, Debug.LogLevels.Exception, group = This.Mod.Namespace, owner = __name__)
 
 class _Importer:
@@ -218,7 +236,7 @@ def _GetLevels () -> typing.List[Level]:
 					try:
 						with open(orderFilePath) as orderFile:
 							orderInformation = json.JSONDecoder().decode(orderFile.read())  # type: typing.List[dict]
-					except:
+					except Exception:
 						Debug.Log("Failed to read load order file '" + Paths.StripUserDataPath(os.path.join(directoryRoot, fileName)) + "'.", This.Mod.Namespace, Debug.LogLevels.Exception, group = This.Mod.Namespace, owner = __name__)
 						continue
 
@@ -229,52 +247,54 @@ def _GetLevels () -> typing.List[Level]:
 						if not isinstance(levelDictionary, dict):
 							raise Exceptions.IncorrectTypeException(levelDictionary, "Root[%d]" % levelIndex, (dict,))
 
-						if not "Paths" in levelDictionary and not "Functions" in levelDictionary:
-							raise Exception("Missing dictionary entry 'Paths' or 'Functions' in 'Root[%d]'" % levelIndex)
+						if not _pathsKey in levelDictionary and not _functionsKey in levelDictionary:
+							raise Exception("Missing dictionary entry '%s' or '%s' in 'Root[%d]'" % (_pathsKey, _functionsKey, levelIndex))
 
-						levelLevelValue = levelDictionary.get("Level", 0.0)  # type: typing.Union[int, float]
+						levelLevelValue = levelDictionary.get(_levelKey, 0.0)  # type: typing.Union[int, float]
 
-						levelPathsValue = levelDictionary.get("Paths", list())  # type: typing.List[typing.Union[pathlib.Path, dict]]
-						levelFunctionsValue = levelDictionary.get("Functions", list())  # type: typing.List[dict]
+						levelPathsValue = levelDictionary.get(_pathsKey, list())  # type: typing.List[typing.Union[pathlib.Path, dict]]
+						levelFunctionsValue = levelDictionary.get(_functionsKey, list())  # type: typing.List[dict]
 
 						if not isinstance(levelLevelValue, int) and not isinstance(levelLevelValue, float):
-							raise Exceptions.IncorrectTypeException(levelLevelValue, "Root[%d][Level]" % levelIndex, (int, float))
+							raise Exceptions.IncorrectTypeException(levelLevelValue, "Root[%d][%s]" % (levelIndex, _levelKey), (int, float))
 
 						if not isinstance(levelPathsValue, list):
-							raise Exceptions.IncorrectTypeException(levelPathsValue, "Root[%d][Paths]" % levelIndex, (list,))
+							raise Exceptions.IncorrectTypeException(levelPathsValue, "Root[%d][%s]" % (levelIndex, _pathsKey), (list,))
 
 						if not isinstance(levelFunctionsValue, list):
-							raise Exceptions.IncorrectTypeException(levelFunctionsValue, "Root[%d][Functions]" % levelIndex, (list,))
+							raise Exceptions.IncorrectTypeException(levelFunctionsValue, "Root[%d][%s]" % (levelIndex, _functionsKey), (list,))
 
 						for pathIndex, pathDictionary in enumerate(levelPathsValue):  # type: int, typing.Dict[str, str]
 							if not isinstance(pathDictionary, dict):
-								raise Exceptions.IncorrectTypeException(pathDictionary, "Root[%d][Paths][%d]" % (levelIndex, pathIndex), (dict,))
+								raise Exceptions.IncorrectTypeException(pathDictionary, "Root[%d][%s][%d]" % (levelIndex, _pathsKey, pathIndex), (dict,))
 
-							if not "Root" in pathDictionary:
-								raise Exception("Missing dictionary entry 'Root' in 'Root[%d][Paths][%d]'" % (levelIndex, pathIndex))
+							if not _pathsRootKey in pathDictionary:
+								raise Exception("Missing dictionary entry '" + _pathsRootKey + "' in 'Root[%d][%s][%d]'" % (levelIndex, _pathsKey, pathIndex))
 
-							if not "Path" in pathDictionary:
-								raise Exception("Missing dictionary entry 'Path' in 'Root[%d][Paths][%d]'" % (levelIndex, pathIndex))
+							if not _pathsPathKey in pathDictionary:
+								raise Exception("Missing dictionary entry '" + _pathsPathKey + "' in 'Root[%d][%s][%d]'" % (levelIndex, _pathsKey, pathIndex))
 
-							pathsRootValue = pathDictionary.get("Root")  # type: str
-							pathsPathValue = pathDictionary.get("Path")  # type: str
+							pathsRootValue = pathDictionary.get(_pathsRootKey)  # type: str
+							pathsPathValue = pathDictionary.get(_pathsPathKey)  # type: str
 
 							if not isinstance(pathsRootValue, str):
-								raise Exceptions.IncorrectTypeException(pathsRootValue, "Root[%d][Paths][%d][Root]" % (levelIndex, pathIndex), (str,))
+								raise Exceptions.IncorrectTypeException(pathsRootValue, "Root[%d][%s][%d][%s]" % (levelIndex, _pathsKey, pathIndex, _pathsRootKey), (str,))
 
 							if not isinstance(pathsPathValue, str):
-								raise Exceptions.IncorrectTypeException(pathsPathValue, "Root[%d][Paths][%d][Root]" % (levelIndex, pathIndex), (str,))
+								raise Exceptions.IncorrectTypeException(pathsPathValue, "Root[%d][%s][%d][%s]" % (levelIndex, _pathsKey, pathIndex, _pathsPathKey), (str,))
 
-							pathsRootValue = pathsRootValue.lower()
+							pathsRootValueLower = pathsRootValue.lower()
 
-							if pathsRootValue == "mods":
-								pathsRootValue = Paths.ModsPath
-							elif pathsRootValue == "s4":
-								pathsRootValue = Paths.UserDataPath
-							elif pathsRootValue == "current":
-								pathsRootValue = directoryRoot
+							if pathsRootValueLower == "mods":
+								pathsRootActual = Paths.ModsPath
+							elif pathsRootValueLower == "s4":
+								pathsRootActual = Paths.UserDataPath
+							elif pathsRootValueLower == "current":
+								pathsRootActual = directoryRoot
+							else:
+								raise Exception("'" + pathsRootValue + "' is not a valid path root, valid roots are 'mods', 's4' and 'current'.")
 
-							levelPathsValue[pathIndex] = pathlib.Path(os.path.join(pathsRootValue, pathsPathValue))
+							levelPathsValue[pathIndex] = pathlib.Path(os.path.join(pathsRootActual, os.path.normpath(pathsPathValue)))
 
 							for defaultPath in defaultLevel.Paths:  # type: pathlib.Path
 								if defaultPath == levelPathsValue[pathIndex]:
@@ -284,40 +304,35 @@ def _GetLevels () -> typing.List[Level]:
 
 						for functionIndex, functionDictionary in enumerate(levelFunctionsValue):  # type: int, dict
 							if not isinstance(functionDictionary, dict):
-								raise Exceptions.IncorrectTypeException(functionDictionary, "Root[%d][Functions][%d]" % (levelIndex, functionIndex), (dict,))
+								raise Exceptions.IncorrectTypeException(functionDictionary, "Root[%d][%s][%d]" % (levelIndex, _functionsKey, functionIndex), (dict,))
 
-							if not "Module" in functionDictionary:
-								raise Exception("Missing dictionary entry 'Module' in 'Root[%d][Functions][%d]'" % (levelIndex, functionIndex))
+							if not _functionsModuleKey in functionDictionary:
+								raise Exception("Missing dictionary entry '" + _functionsModuleKey + "' in 'Root[%d][%s][%d]'" % (levelIndex, _functionsKey, functionIndex))
 
-							if not "Function" in functionDictionary:
-								raise Exception("Missing dictionary entry 'Function' in 'Root[%d][Functions][%d]'" % (levelIndex, functionIndex))
+							if not _functionsFunctionKey in functionDictionary:
+								raise Exception("Missing dictionary entry '" + _functionsFunctionKey + "' in 'Root[%d][%s][%d]'" % (levelIndex, _functionsKey, functionIndex))
 
-							if not "Arguments" in functionDictionary:
-								raise Exception("Missing dictionary entry 'Arguments' in 'Root[%d][Functions][%d]'" % (levelIndex, functionIndex))
 
-							if not "Keyword Arguments" in functionDictionary:
-								raise Exception("Missing dictionary entry 'Keyword Arguments' in 'Root[%d][Functions][%d]'" % (levelIndex, functionIndex))
-
-							functionModuleValue = functionDictionary["Module"]  # type: str
-							functionFunctionValue = functionDictionary["Function"]  # type: str
-							functionArgumentsValue = functionDictionary["Arguments"]  # type: list
-							functionKeywordArgumentsValue = functionDictionary["Keyword Arguments"]  # type: dict
+							functionModuleValue = functionDictionary[_functionsModuleKey]  # type: str
+							functionFunctionValue = functionDictionary[_functionsFunctionKey]  # type: str
+							functionArgumentsValue = functionDictionary.get(_functionsArgumentKey, list())  # type: list
+							functionKeywordArgumentsValue = functionDictionary.get(_functionsKeywordArgumentsKey, dict())  # type: dict
 
 							if not isinstance(functionModuleValue, str):
-								raise Exceptions.IncorrectTypeException(functionModuleValue, "Root[%d][Functions][%d][Module]" % (levelIndex, functionIndex), (str,))
+								raise Exceptions.IncorrectTypeException(functionModuleValue, "Root[%d][%s][%d][%s]" % (levelIndex, _functionsKey, functionIndex, _functionsModuleKey), (str,))
 
 							if not isinstance(functionFunctionValue, str):
-								raise Exceptions.IncorrectTypeException(functionFunctionValue, "Root[%d][Functions][%d][Function]" % (levelIndex, functionIndex), (str,))
+								raise Exceptions.IncorrectTypeException(functionFunctionValue, "Root[%d][%s][%d][%s]" % (levelIndex, _functionsKey, functionIndex, _functionsFunctionKey), (str,))
 
 							if not isinstance(functionArgumentsValue, list):
-								raise Exceptions.IncorrectTypeException(functionArgumentsValue, "Root[%d][Functions][%d][Arguments]" % (levelIndex, functionIndex), (list,))
+								raise Exceptions.IncorrectTypeException(functionArgumentsValue, "Root[%d][%s][%d][%s]" % (levelIndex, _functionsKey, functionIndex, _functionsArgumentKey), (list,))
 
 							if not isinstance(functionKeywordArgumentsValue, dict):
-								raise Exceptions.IncorrectTypeException(functionArgumentsValue, "Root[%d][Functions][%d][Keyword Arguments]" % (levelIndex, functionIndex), (dict,))
+								raise Exceptions.IncorrectTypeException(functionArgumentsValue, "Root[%d][%s][%d][%s]" % (levelIndex, _functionsKey, functionIndex, _functionsKeywordArgumentsKey), (dict,))
 
 							for functionKeywordArgumentsValueKey in functionKeywordArgumentsValue.keys():  # type: int, dict
 								if not isinstance(functionKeywordArgumentsValueKey, str):
-									raise Exceptions.IncorrectTypeException(functionKeywordArgumentsValueKey, "Root[%d][Functions][%d][Function][Key]" % (levelIndex, functionIndex), (str,))
+									raise Exceptions.IncorrectTypeException(functionKeywordArgumentsValueKey, "Root[%d][%s][%d][%s]<Key>" % (levelIndex, _functionsKey, functionIndex, _functionsKeywordArgumentsKey), (str,))
 
 						_RemoveDuplicates(levelFunctionsValue)
 
@@ -341,7 +356,7 @@ def _GetLevels () -> typing.List[Level]:
 
 							if not matchedLevel:
 								levels.append(Level(levelLevelValue, levelPathsValue, levelFunctionsValue))
-				except:
+				except Exception:
 					Debug.Log("Encountered a problem while reading load order file '" + Paths.StripUserDataPath(os.path.join(directoryRoot, fileName)) + "'.", This.Mod.Namespace, Debug.LogLevels.Exception, group = This.Mod.Namespace, owner = __name__)
 
 	return _SortLevels(levels)
@@ -419,7 +434,7 @@ def _GetModules (path: pathlib.Path) -> list:
 						modules.append(fileRelativePath.replace("/", ".").replace("\\", "."))
 		else:
 			raise Exception("Invalid path.")
-	except:
+	except Exception:
 		Debug.Log("Failed to get modules in '" + Paths.StripUserDataPath(str(path)) + "'.", This.Mod.Namespace, Debug.LogLevels.Exception, group = This.Mod.Namespace, owner = __name__)
 
 	return modules

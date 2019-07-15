@@ -30,7 +30,7 @@ class SettingBase:
 		raise NotImplementedError()
 
 	@classmethod
-	def isSetup (cls) -> bool:
+	def IsSetup (cls) -> bool:
 		raise NotImplementedError()
 
 	@classmethod

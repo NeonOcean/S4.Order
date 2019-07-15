@@ -33,7 +33,7 @@ def ResetEverything (mod: Mods.Mod) -> bool:
 
 			try:
 				OnReset = getattr(sys.modules[module], "_OnReset")
-			except:
+			except Exception:
 				pass
 
 			if isinstance(OnReset, types.FunctionType):
@@ -59,7 +59,7 @@ def ResetSettings (mod: Mods.Mod) -> bool:
 
 			try:
 				OnReset = getattr(sys.modules[module], "_OnResetSettings")
-			except:
+			except Exception:
 				pass
 
 			if isinstance(OnReset, types.FunctionType):

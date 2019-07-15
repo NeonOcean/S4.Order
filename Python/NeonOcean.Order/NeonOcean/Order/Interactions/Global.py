@@ -16,13 +16,13 @@ class SupportNeonOceanInteraction(Dependent.DependentExtension, Events.EventsExt
 			super().__init_subclass__(*args, **kwargs)
 
 			SupportNeonOceanInteractions.append(cls)
-		except:
+		except Exception:
 			Debug.Log("Failed to initialize new sub class for '" + cls.__name__ + "'.", This.Mod.Namespace, Debug.LogLevels.Exception, group = This.Mod.Namespace, owner = __name__)
 
 	def OnStarted (self) -> None:
 		try:
 			Generic.ShowOpenBrowserDialog(Websites.GetNOSupportURL())
-		except:
+		except Exception:
 			Debug.Log("Failed to show the support site with the open browser dialog.", This.Mod.Namespace, Debug.LogLevels.Exception, group = This.Mod.Namespace, owner = __name__)
 
 class VisitNeonOceanSiteInteraction(Dependent.DependentExtension, Events.EventsExtension, Registration.RegistrationExtension, immediate_interaction.ImmediateSuperInteraction):
@@ -40,5 +40,5 @@ class VisitNeonOceanSiteInteraction(Dependent.DependentExtension, Events.EventsE
 	def OnStarted (self) -> None:
 		try:
 			Generic.ShowOpenBrowserDialog(Websites.GetNOMainURL())
-		except:
+		except Exception:
 			Debug.Log("Failed to show the NeonOcean site with the open browser dialog.", This.Mod.Namespace, Debug.LogLevels.Exception, group = This.Mod.Namespace, owner = __name__)

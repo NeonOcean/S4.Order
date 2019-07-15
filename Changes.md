@@ -1,6 +1,21 @@
+## v1.3.0 (July 15, 2019)
+### Changes
+- All of Order's interactions will now only show up when clicking on Sims instead of everything.
+- Change the way persistent files are formatted, this will likely cause settings to reset.
+- More changes occurred in Main involving mod information files, these changes where, again, copied to Order for this update.
+- Removed a space in the keyword arguments dictionary key for load order functions.
+- Load order functions no longer require a 'Arguments' or 'KeywordArguments' value.
+
+### Fixed Bugs
+- Fixed potential problem involving exit exceptions being caught by the load order system.
+- Invalid order file path roots are now caught as they should have been.
+- Modules named \_\_init\_\_ are no longer imported twice.
+
+______________________________
+
 ## v1.2.0 (June 12, 2019)
 ### Changes
-- Many changes occurred this update to the mod information files to conform to changes made in the mod Main.
+- Many changes occurred this update to a system that reads the mod information files in order to conform to changes made in the mod Main.
 - Added an icon to the root NeonOcean pie menu category.
 - Changed this mod's license to CC BY.
 

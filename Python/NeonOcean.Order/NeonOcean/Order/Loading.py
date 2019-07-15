@@ -81,12 +81,12 @@ class _Loader:
 
 	def GetInformation (self) -> None:
 		try:
-			with open(self.Mod.FilePath) as modInformationFile:
+			with open(self.Mod.InformationFilePath) as modInformationFile:
 				modInformationDictionary = json.JSONDecoder().decode(modInformationFile.read())  # type: dict
 
 			if not isinstance(modInformationDictionary, dict):
 				raise TypeError("Cannot convert mod file to dictionary.")
-		except:
+		except Exception:
 			Debug.Log("Failed to read mod information for '" + self.Mod.Namespace + "'.", This.Mod.Namespace, Debug.LogLevels.Exception, group = This.Mod.Namespace, owner = __name__)
 			return
 
@@ -128,8 +128,8 @@ class _Loader:
 			try:
 				_InitiateModules(self.Mod, cause)
 				Debug.Log("Successfully initiated mod '" + self.Mod.Namespace + "'.", This.Mod.Namespace, Debug.LogLevels.Info, group = This.Mod.Namespace, owner = __name__)
-			except:
-				Debug.Log("Failed to completely initiate '" + self.Mod.Namespace + "' modules.", This.Mod.Namespace, Debug.LogLevels.Error, group = This.Mod.Namespace, owner = __name__)
+			except Exception:
+				Debug.Log("Failed to completely initiate '" + self.Mod.Namespace + "' modules.", This.Mod.Namespace, Debug.LogLevels.Exception, group = This.Mod.Namespace, owner = __name__)
 
 				self.Disable(warningList = _failedLoadingMods)
 				self.Mod.Loading = False
@@ -140,8 +140,8 @@ class _Loader:
 			try:
 				_StartModules(self.Mod, cause)
 				Debug.Log("Successfully started mod '" + self.Mod.Namespace + "'.", This.Mod.Namespace, Debug.LogLevels.Info, group = This.Mod.Namespace, owner = __name__)
-			except:
-				Debug.Log("Failed to completely start '" + self.Mod.Namespace + "' modules.", This.Mod.Namespace, Debug.LogLevels.Error, group = This.Mod.Namespace, owner = __name__)
+			except Exception:
+				Debug.Log("Failed to completely start '" + self.Mod.Namespace + "' modules.", This.Mod.Namespace, Debug.LogLevels.Exception, group = This.Mod.Namespace, owner = __name__)
 
 				self.Disable(warningList = _failedLoadingMods)
 				self.Mod.Loading = False
@@ -212,7 +212,7 @@ class _Loader:
 
 			self.Mod.Name = name
 			return True
-		except:
+		except Exception:
 			Debug.Log("Failed to update mod name for '" + self.Mod.Namespace + "'.", This.Mod.Namespace, Debug.LogLevels.Exception, group = This.Mod.Namespace, owner = __name__)
 			return False
 
@@ -228,7 +228,7 @@ class _Loader:
 
 			self.Mod.Author = author
 			return True
-		except:
+		except Exception:
 			Debug.Log("Failed to update mod author for '" + self.Mod.Namespace + "'.", This.Mod.Namespace, Debug.LogLevels.Exception, group = This.Mod.Namespace, owner = __name__)
 			return False
 
@@ -243,8 +243,18 @@ class _Loader:
 				raise Exceptions.IncorrectTypeException(version, "Root[Version]", (str,))
 
 			self.Mod.Version = Version.Version(version)
+
+			versionDisplay = informationDictionary.get("VersionDisplay", None)  # type: str
+
+			if versionDisplay is None:
+				versionDisplay = str(self.Mod.Version)  # type: str
+			elif not isinstance(versionDisplay, str):
+				raise Exceptions.IncorrectTypeException(versionDisplay, "Root[versionDisplay]", (str,))
+
+			self.Mod.VersionDisplay = versionDisplay
+
 			return True
-		except:
+		except Exception:
 			Debug.Log("Failed to update mod version for '" + self.Mod.Namespace + "'.", This.Mod.Namespace, Debug.LogLevels.Exception, group = This.Mod.Namespace, owner = __name__)
 			return False
 
@@ -257,41 +267,65 @@ class _Loader:
 
 			self.Mod.Distribution = distribution
 			return True
-		except:
+		except Exception:
 			Debug.Log("Failed to update mod distribution for '" + self.Mod.Namespace + "'.", This.Mod.Namespace, Debug.LogLevels.Exception, group = This.Mod.Namespace, owner = __name__)
 			return False
 
 	def _UpdateRating (self, informationDictionary: dict) -> bool:
 		try:
-			if not "Rating" in informationDictionary:
-				raise Exception("Missing dictionary entry 'Rating' in 'Root'.")
-
-			rating = informationDictionary["Rating"]  # type: str
+			rating = informationDictionary.get("Rating", Mods.Rating.Normal.name)  # type: str
 
 			if not isinstance(rating, str):
 				raise Exceptions.IncorrectTypeException(rating, "Root[Rating]", (str,))
 
 			self.Mod.Rating = Parse.ParseEnum(rating, Mods.Rating)
 			return True
-		except:
+		except Exception:
 			Debug.Log("Failed to update mod rating for '" + self.Mod.Namespace + "'.", This.Mod.Namespace, Debug.LogLevels.Exception, group = This.Mod.Namespace, owner = __name__)
 			return False
 
 	def _UpdateScriptPaths (self, informationDictionary: dict) -> bool:
 		try:
-			if not "ScriptPaths" in informationDictionary:
-				raise Exception("Missing dictionary entry 'ScriptPaths' in 'Root'.")
-
-			scriptPaths = informationDictionary["ScriptPaths"]  # type: typing.List[str]
+			scriptPaths = informationDictionary.get("ScriptPaths", list())  # type: typing.List[str]
 
 			if not isinstance(scriptPaths, list):
 				raise Exceptions.IncorrectTypeException(scriptPaths, "Root[ScriptPaths]", (list,))
 
 			for index, scriptPath in enumerate(scriptPaths):  # type: int, str
-				if not isinstance(scriptPath, str):
-					raise Exceptions.IncorrectTypeException(scriptPath, "Root[ScriptPaths][%d]" % index, (str,))
+				if not isinstance(scriptPath, str) and not isinstance(scriptPath, dict):
+					raise Exceptions.IncorrectTypeException(scriptPath, "Root[ScriptPaths][%d]" % index, (str, dict))
 
-				scriptPaths[index] = os.path.join(Paths.ModsPath, os.path.normpath(scriptPath))
+				if isinstance(scriptPath, dict):
+					if not "Root" in scriptPath:
+						raise Exception("Missing dictionary entry 'Root' in 'Root[ScriptPaths][%d]'.")
+
+					if not "Path" in scriptPath:
+						raise Exception("Missing dictionary entry 'Path' in 'Root[ScriptPaths][%d]'.")
+
+					scriptPathRoot = scriptPath["Root"]  # type: str
+
+					if not isinstance(scriptPathRoot, str):
+						raise Exceptions.IncorrectTypeException(scriptPathRoot, "Root[ScriptPaths][%d][Root]" % index, (str,))
+
+					scriptPathPath = scriptPath["Path"]  # type: str
+
+					if not isinstance(scriptPathPath, str):
+						raise Exceptions.IncorrectTypeException(scriptPathPath, "Root[ScriptPaths][%d][Path]" % index, (str,))
+
+					scriptPathRootLower = scriptPathRoot.lower()
+
+					if scriptPathRootLower == "mods":
+						scriptPathRootValue = Paths.ModsPath
+					elif scriptPathRootLower == "s4":
+						scriptPathRootValue = Paths.UserDataPath
+					elif scriptPathRootLower == "current":
+						scriptPathRootValue = self.Mod.InformationFileDirectoryPath
+					else:
+						raise Exception("'" + scriptPathPath + "' is not a valid path root, valid roots are 'mods', 's4' and 'current'.")
+
+					scriptPaths[index] = os.path.join(scriptPathRootValue, os.path.normpath(scriptPathPath))
+				else:
+					scriptPaths[index] = os.path.join(Paths.ModsPath, os.path.normpath(scriptPath))
 
 				if not os.path.exists(scriptPaths[index]):
 					raise Exception("'" + scriptPaths[index] + "' does not exist.")
@@ -302,16 +336,13 @@ class _Loader:
 				self.Mod.Modules.extend(_GetArchiveModules(scriptPath))
 
 			return True
-		except:
+		except Exception:
 			Debug.Log("Failed to update mod script paths for '" + self.Mod.Namespace + "'.", This.Mod.Namespace, Debug.LogLevels.Exception, group = This.Mod.Namespace, owner = __name__)
 			return False
 
 	def _UpdateRequirements (self, informationDictionary: dict) -> bool:
 		try:
-			if not "Requirements" in informationDictionary:
-				raise Exception("Missing dictionary entry 'Requirements' in 'Root'.")
-
-			requirements = informationDictionary["Requirements"]  # type: typing.List[str]
+			requirements = informationDictionary.get("Requirements", list())  # type: typing.List[str]
 
 			if not isinstance(requirements, list):
 				raise Exceptions.IncorrectTypeException(requirements, "Root[Requirements]", (list,))
@@ -325,16 +356,13 @@ class _Loader:
 
 			self.Mod.Requirements = requirements
 			return True
-		except:
+		except Exception:
 			Debug.Log("Failed to update mod requirements for '" + self.Mod.Namespace + "'.", This.Mod.Namespace, Debug.LogLevels.Exception, group = This.Mod.Namespace, owner = __name__)
 			return False
 
 	def _UpdateCompatibility (self, informationDictionary: dict) -> bool:
 		try:
-			if not "Compatibility" in informationDictionary:
-				raise Exception("Missing dictionary entry 'Compatibility' in 'Root'.")
-
-			compatibility = informationDictionary["Compatibility"]  # type: typing.Dict[str, dict]
+			compatibility = informationDictionary.get("Compatibility", dict())  # type: typing.Dict[str, dict]
 
 			if not isinstance(compatibility, dict):
 				raise Exceptions.IncorrectTypeException(compatibility, "Root[Compatibility]", (dict,))
@@ -365,13 +393,13 @@ class _Loader:
 				if not isinstance(highestVersion, str) and highestVersion is not None:
 					raise Exceptions.IncorrectTypeException(highestVersion, "Root[Compatibility][%s][HighestVersion]" % namespace, (str, "None"))
 
-				lowestVersionObject = Version.Version(string = lowestVersion) if lowestVersion is not None else None  # type: typing.Optional[Version.Version]
-				highestVersionObject = Version.Version(string = highestVersion) if highestVersion is not None else None  # type: typing.Optional[Version.Version]
+				lowestVersionObject = Version.Version(versionString = lowestVersion) if lowestVersion is not None else None  # type: typing.Optional[Version.Version]
+				highestVersionObject = Version.Version(versionString = highestVersion) if highestVersion is not None else None  # type: typing.Optional[Version.Version]
 
 				self.Mod.Compatibility.append(Mods.Compatibility(namespace, lowestVersionObject, highestVersionObject))
 
 			return True
-		except:
+		except Exception:
 			Debug.Log("Failed to update mod compatibility for '" + self.Mod.Namespace + "'.", This.Mod.Namespace, Debug.LogLevels.Exception, group = This.Mod.Namespace, owner = __name__)
 			return False
 
@@ -409,7 +437,7 @@ class _Loader:
 			self.Mod.Imported = True
 
 			return True
-		except:
+		except Exception:
 			Debug.Log("Failed to import '" + self.Mod.Namespace + "' modules.", This.Mod.Namespace, Debug.LogLevels.Exception, group = This.Mod.Namespace, owner = __name__)
 			return False
 
@@ -517,7 +545,10 @@ def _Import (modules: list) -> None:
 	importer = custom_import.CustomLoader(_Importer())  # type: custom_import.CustomLoader
 
 	for module in modules:  # type: str
-		importer.load_module(module)
+		if module.endswith(".__init__"):
+			importer.load_module(module[:-len(".__init__")])
+		else:
+			importer.load_module(module)
 
 def _GetArchiveModules (archivePath: str) -> typing.List[str]:
 	modules = list()  # type: typing.List[str]
@@ -650,7 +681,7 @@ def _InitiateModules (mod: Mods.Mod, cause: LoadingShared.LoadingCauses) -> None
 
 		try:
 			OnInitiate = getattr(sys.modules[module], "_OnInitiate")
-		except:
+		except Exception:
 			pass
 
 		if isinstance(OnInitiate, types.FunctionType):
@@ -662,7 +693,7 @@ def _InitiateModules (mod: Mods.Mod, cause: LoadingShared.LoadingCauses) -> None
 
 		try:
 			OnInitiateLate = getattr(sys.modules[module], "_OnInitiateLate")
-		except:
+		except Exception:
 			pass
 
 		if isinstance(OnInitiateLate, types.FunctionType):
@@ -675,7 +706,7 @@ def _StartModules (mod: Mods.Mod, cause: LoadingShared.LoadingCauses) -> None:
 
 		try:
 			OnStart = getattr(sys.modules[module], "_OnStart")
-		except:
+		except Exception:
 			pass
 
 		if isinstance(OnStart, types.FunctionType):
@@ -687,7 +718,7 @@ def _StartModules (mod: Mods.Mod, cause: LoadingShared.LoadingCauses) -> None:
 
 		try:
 			OnStartLate = getattr(sys.modules[module], "_OnStartLate")
-		except:
+		except Exception:
 			pass
 
 		if isinstance(OnStartLate, types.FunctionType):
@@ -705,14 +736,14 @@ def _StopModules (mod: Mods.Mod, cause: LoadingShared.UnloadingCauses) -> bool:
 
 		try:
 			OnStopEarly = getattr(sys.modules[module], "_OnStopEarly")
-		except:
+		except Exception:
 			pass
 
 		if isinstance(OnStopEarly, types.FunctionType):
 			if len(inspect.signature(OnStopEarly).parameters) == 1:
 				try:
 					OnStopEarly(cause)
-				except:
+				except Exception:
 					Debug.Log("Failed to call '_StopEarly' for module '" + module + "'.", This.Mod.Namespace, Debug.LogLevels.Warning, group = This.Mod.Namespace, owner = __name__)
 					successful = False
 
@@ -721,14 +752,14 @@ def _StopModules (mod: Mods.Mod, cause: LoadingShared.UnloadingCauses) -> bool:
 
 		try:
 			OnStop = getattr(sys.modules[module], "_OnStop")
-		except:
+		except Exception:
 			pass
 
 		if isinstance(OnStop, types.FunctionType):
 			if len(inspect.signature(OnStop).parameters) == 1:
 				try:
 					OnStop(cause)
-				except:
+				except Exception:
 					Debug.Log("Failed to call '_Stop' for module '" + module + "'.", This.Mod.Namespace, Debug.LogLevels.Warning, group = This.Mod.Namespace, owner = __name__)
 					successful = False
 
@@ -742,14 +773,14 @@ def _UnloadModules (mod: Mods.Mod, cause: LoadingShared.UnloadingCauses) -> bool
 
 		try:
 			OnUnloadEarly = getattr(sys.modules[module], "_OnUnloadEarly")
-		except:
+		except Exception:
 			pass
 
 		if isinstance(OnUnloadEarly, types.FunctionType):
 			if len(inspect.signature(OnUnloadEarly).parameters) == 1:
 				try:
 					OnUnloadEarly(cause)
-				except:
+				except Exception:
 					Debug.Log("Failed to call '_UnloadEarly' for module '" + module + "'.", This.Mod.Namespace, Debug.LogLevels.Warning, group = This.Mod.Namespace, owner = __name__)
 					successful = False
 
@@ -758,14 +789,14 @@ def _UnloadModules (mod: Mods.Mod, cause: LoadingShared.UnloadingCauses) -> bool
 
 		try:
 			OnUnload = getattr(sys.modules[module], "_OnUnload")
-		except:
+		except Exception:
 			pass
 
 		if isinstance(OnUnload, types.FunctionType):
 			if len(inspect.signature(OnUnload).parameters) == 1:
 				try:
 					OnUnload(cause)
-				except:
+				except Exception:
 					Debug.Log("Failed to call '_Unload' for module '" + module + "'.", This.Mod.Namespace, Debug.LogLevels.Warning, group = This.Mod.Namespace, owner = __name__)
 					successful = False
 
@@ -775,7 +806,10 @@ def _UnloadModules (mod: Mods.Mod, cause: LoadingShared.UnloadingCauses) -> bool
 
 def _OnExitCallback ():
 	for mod in _allLoaders:  # type: _Loader
-		if mod.Mod.IsCurrentlyUnloadable(This.Mod.Namespace):
-			mod.Unload(cause = LoadingShared.UnloadingCauses.Exiting)
+		try:
+			if mod.Mod.IsCurrentlyUnloadable(This.Mod.Namespace):
+				mod.Unload(cause = LoadingShared.UnloadingCauses.Exiting)
+		except:
+			Debug.Log("Failed to unload the mod '" + mod.Mod.Namespace + "'.", This.Mod.Namespace, Debug.LogLevels.Exception, group = This.Mod.Namespace, owner = __name__)
 
 _Setup()

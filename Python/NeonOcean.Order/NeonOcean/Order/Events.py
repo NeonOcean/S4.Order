@@ -1,7 +1,7 @@
 import typing
 
-from NeonOcean.Order import Mods
-from NeonOcean.Order.Tools import Exceptions
+from NeonOcean.Order import Mods, Debug, This
+from NeonOcean.Order.Tools import Exceptions, Types
 
 _onModUnloadLevels = list()  # type: typing.List[Level]
 _onModReloadLevels = list()  # type: typing.List[Level]
@@ -28,7 +28,10 @@ class Level:
 		"""
 
 		for callback in self.Callbacks:
-			callback(*args, **kwargs)
+			try:
+				callback(*args, **kwargs)
+			except Exception:
+				Debug.Log("Failed to activate callback at '" + Types.GetFullName(callback) + "'.", This.Mod.Namespace, Debug.LogLevels.Exception, group = This.Mod.Namespace, owner = __name__)
 
 	def Register (self, callback: typing.Callable) -> None:
 		"""

@@ -76,7 +76,7 @@ class _Information:
 			for index, attribute in enumerate(path):  # type: str
 				try:
 					currentObject = getattr(currentObject, attribute)
-				except:
+				except Exception:
 					Debug.Log("Cannot find attribute '" + attribute + "' in '" + Types.GetFullName(currentObject), This.Mod.Namespace, Debug.LogLevels.Exception, group = This.Mod.Namespace, owner = __name__)
 
 				if index != len(path) - 1:
@@ -103,7 +103,7 @@ class _Information:
 			if callObject is not None:
 				self.OriginalCallable = callObject
 				setattr(self.OriginalModule, self.OriginalName, _Wrapper(self))
-		except:
+		except Exception:
 			Debug.Log("Failed to reconnect patch original.", This.Mod.Namespace, Debug.LogLevels.Exception, group = This.Mod.Namespace, owner = __name__)
 			return
 
@@ -116,7 +116,7 @@ class _Information:
 			for index, attribute in enumerate(path):  # type: str
 				try:
 					currentObject = getattr(currentObject, attribute)
-				except:
+				except Exception:
 					Debug.Log("Cannot find attribute '" + attribute + "' in '" + Types.GetFullName(currentObject), This.Mod.Namespace, Debug.LogLevels.Exception, group = This.Mod.Namespace, owner = __name__)
 
 				if index != len(path) - 1:
@@ -140,7 +140,7 @@ class _Information:
 
 			if callObject is not None:
 				self.TargetFunction = callObject
-		except:
+		except Exception:
 			Debug.Log("Failed to reconnect patch target.", This.Mod.Namespace, Debug.LogLevels.Exception, group = This.Mod.Namespace, owner = __name__)
 			return
 

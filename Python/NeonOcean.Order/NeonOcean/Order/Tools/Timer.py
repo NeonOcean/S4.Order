@@ -131,7 +131,7 @@ class Timer(threading.Thread):
 		try:
 			if not self._callbackThread.isAlive():
 				self._callbackThread.start()
-		except:
+		except Exception:
 			self._callbackThread = _TimerCallbackThread(self)
 			self._callbackThread.QueueCallback(self.Callback, self.CallbackArgs, self.CallbackKwargs)
 			self._callbackThread.start()
@@ -164,7 +164,7 @@ class _TimerCallbackThread(threading.Thread):
 
 				try:
 					callback(*callbackArguments, **callbackKeywordArguments)
-				except:
+				except Exception:
 					Debug.Log("Failed to call a timer callback. Callback '" + Types.GetFullName(callback) + "'", This.Mod.Namespace, level = Debug.LogLevels.Warning, group = This.Mod.Namespace, owner = __name__)
 
 				self._queuedCallbacks.pop(0)

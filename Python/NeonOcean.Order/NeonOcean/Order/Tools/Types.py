@@ -2,8 +2,8 @@ import types
 
 def GetFullName (obj) -> str:
 	"""
-	:param obj: Takes builtin function, function, method, type, or object
-	:return Full name of a built-in function, function, method, type or object's type including module
+	:param obj: Takes builtin function, function, method, type, or object.
+	:return: The full name of a built-in function, function, method, type or object's type, including the module.
 	"""
 
 	if isinstance(obj, types.BuiltinFunctionType):
