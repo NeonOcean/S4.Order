@@ -1,1 +1,0 @@
-If enabled, the mod will report preview updates along with release updates. The setting "Check For Updates" still needs to be enabled in order to check for updates. This setting will not be used if NeonOcean's Main is installed.

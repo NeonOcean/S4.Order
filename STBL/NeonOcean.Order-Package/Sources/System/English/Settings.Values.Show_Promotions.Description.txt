@@ -1,1 +1,0 @@
-If enabled, the mod may occasionally show a notification to promote things like new mods or major updates. All promotions will only ever be shown once. This setting will not be used if NeonOcean's Main is installed.

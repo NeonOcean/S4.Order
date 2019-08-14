@@ -1,4 +1,0 @@
-The currently installed version of this mod has been superseded by a new one.
-
-Release type: Patrons only
-Version: {0.String}

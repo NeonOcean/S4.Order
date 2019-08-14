@@ -1,4 +1,0 @@
-Some mods failed to load correctly.
-
-The following mods had to be disabled because of this:
-{0.String}

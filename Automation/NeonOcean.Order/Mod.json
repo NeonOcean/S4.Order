@@ -19,5 +19,6 @@
 		"Source Excluded": [],
 		"Merge Root": ""
 	},
-	"Uninstall": "NeonOcean.Order/Uninstall.exe"
+	"Uninstall": "NeonOcean.Order/Uninstall.exe",
+	"UninstallFiles": "NeonOcean.Order/Files.txt"
 }
