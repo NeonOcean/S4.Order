@@ -1,3 +1,17 @@
+## v1.4.0 ()
+### Changes
+- Version numbers now follow the semantic versioning specification. https://semver.org/
+- Changed this mod's namespace from NeonOcean.Order to NeonOcean.S4.Order.
+- Changed load order file naming scheme, check the documentation for more information.
+- Updated mod information file loading to follow changes in the mod Main.
+- Settings are now listed in dialog instead of an interaction menu.
+- Added icons to some mod interactions and interaction categories.
+
+### Fixed bugs
+- Fixed mod documentation links.
+
+______________________________
+
 ## v1.3.0 (July 15, 2019)
 ### Changes
 - All of Order's interactions will now only show up when clicking on Sims instead of everything.

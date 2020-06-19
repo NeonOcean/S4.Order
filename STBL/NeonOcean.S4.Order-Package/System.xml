@@ -1,0 +1,405 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<STBLXMLFile xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<FallbackLanguage>0</FallbackLanguage>
+	<STBLGroup>1064960002</STBLGroup>
+	<STBLInstance>15720991508592122211</STBLInstance>
+	<STBLName>NeonOcean_S4_Order_STBL_System_{0:Underscored}</STBLName>
+	<BuildIdentifiers>true</BuildIdentifiers>
+	<IdentifiersGroup>1064960002</IdentifiersGroup>
+	<IdentifiersInstance>13929200698819281377</IdentifiersInstance>
+	<IdentifiersName>NeonOcean_S4_Order_STBL_System_Identifiers</IdentifiersName>
+	<Entries>
+		<STBLXMLEntry>
+			<Identifier>NeonOcean.S4.Order.Debug.Write_Failure_Notification.Text</Identifier>
+			<Key>3925577695</Key>
+			<English>Failed to write a debug file, this problem may make error reporting impossible.
+
+Error Information:
+{0.String}</English>
+		</STBLXMLEntry>
+		<STBLXMLEntry>
+			<Identifier>NeonOcean.S4.Order.Debug.Write_Failure_Notification.Title</Identifier>
+			<Key>4130649510</Key>
+			<English>NeonOcean - Order: Major Failure Detected</English>
+		</STBLXMLEntry>
+		<STBLXMLEntry>
+			<Identifier>NeonOcean.S4.Order.Distribution.Promotions.Default.Button</Identifier>
+			<Key>417805022</Key>
+			<English>View</English>
+		</STBLXMLEntry>
+		<STBLXMLEntry>
+			<Identifier>NeonOcean.S4.Order.Distribution.Promotions.Default.Title</Identifier>
+			<Key>3873914742</Key>
+			<English>NeonOcean:</English>
+		</STBLXMLEntry>
+		<STBLXMLEntry>
+			<Identifier>NeonOcean.S4.Order.Distribution.Update_Notification.Button</Identifier>
+			<Key>3805660097</Key>
+			<English>View update</English>
+		</STBLXMLEntry>
+		<STBLXMLEntry>
+			<Identifier>NeonOcean.S4.Order.Distribution.Update_Notification.Preview_Text</Identifier>
+			<Key>4125734532</Key>
+			<English>The currently installed version of this mod has been superseded by a new one.
+
+Release type: Preview
+Version: {0.String}</English>
+		</STBLXMLEntry>
+		<STBLXMLEntry>
+			<Identifier>NeonOcean.S4.Order.Distribution.Update_Notification.Release_Text</Identifier>
+			<Key>683934429</Key>
+			<English>The currently installed version of this mod has been superseded by a new one.
+
+Release type: Public
+Version: {0.String}</English>
+		</STBLXMLEntry>
+		<STBLXMLEntry>
+			<Identifier>NeonOcean.S4.Order.Distribution.Update_Notification.Title</Identifier>
+			<Key>2397609223</Key>
+			<English>NeonOcean - {0.String}: Update Available</English>
+		</STBLXMLEntry>
+		<STBLXMLEntry>
+			<Identifier>NeonOcean.S4.Order.Generic_Dialogs.About_Mod_Dialog.Ok_Button</Identifier>
+			<Key>3338052833</Key>
+			<English>Continue</English>
+		</STBLXMLEntry>
+		<STBLXMLEntry>
+			<Identifier>NeonOcean.S4.Order.Generic_Dialogs.About_Mod_Dialog.Text</Identifier>
+			<Key>1758072300</Key>
+			<English>Name: {0.String}
+Author: {1.String}
+Version: {2.String}
+Build Date: {3.String}
+Build Game Version: v{4.String}</English>
+		</STBLXMLEntry>
+		<STBLXMLEntry>
+			<Identifier>NeonOcean.S4.Order.Generic_Dialogs.About_Mod_Dialog.Title</Identifier>
+			<Key>1378760886</Key>
+			<English>About {0.String}</English>
+		</STBLXMLEntry>
+		<STBLXMLEntry>
+			<Identifier>NeonOcean.S4.Order.Generic_Dialogs.About_Mod_Dialog.Unknown</Identifier>
+			<Key>888592705</Key>
+			<English>Unknown</English>
+		</STBLXMLEntry>
+		<STBLXMLEntry>
+			<Identifier>NeonOcean.S4.Order.Generic_Dialogs.Open_Browser_Dialog.No_Button</Identifier>
+			<Key>2848967417</Key>
+			<English>No</English>
+		</STBLXMLEntry>
+		<STBLXMLEntry>
+			<Identifier>NeonOcean.S4.Order.Generic_Dialogs.Open_Browser_Dialog.Text</Identifier>
+			<Key>206665494</Key>
+			<English>You are about to open a website in an external browser. 
+Would you like to proceed?
+
+&lt;b&gt;Visiting&lt;/b&gt;: 
+{0.String}
+</English>
+		</STBLXMLEntry>
+		<STBLXMLEntry>
+			<Identifier>NeonOcean.S4.Order.Generic_Dialogs.Open_Browser_Dialog.Yes_Button</Identifier>
+			<Key>2198622161</Key>
+			<English>Yes</English>
+		</STBLXMLEntry>
+		<STBLXMLEntry>
+			<Identifier>NeonOcean.S4.Order.Interaction_Categories.NeonOcean</Identifier>
+			<Key>2273491374</Key>
+			<English>NeonOcean</English>
+		</STBLXMLEntry>
+		<STBLXMLEntry>
+			<Identifier>NeonOcean.S4.Order.Interaction_Categories.Order</Identifier>
+			<Key>2638093493</Key>
+			<English>Order</English>
+		</STBLXMLEntry>
+		<STBLXMLEntry>
+			<Identifier>NeonOcean.S4.Order.Interactions.Global.Support_NeonOcean.Display_Name</Identifier>
+			<Key>1994869418</Key>
+			<English>Support NeonOcean</English>
+		</STBLXMLEntry>
+		<STBLXMLEntry>
+			<Identifier>NeonOcean.S4.Order.Interactions.Global.Visit_NeonOcean_Site.Display_Name</Identifier>
+			<Key>404109003</Key>
+			<English>Visit NeonOcean's website</English>
+		</STBLXMLEntry>
+		<STBLXMLEntry>
+			<Identifier>NeonOcean.S4.Order.Interactions.Settings.Mod_Settings.Display_Name</Identifier>
+			<Key>2502811662</Key>
+			<English>Mod Settings</English>
+		</STBLXMLEntry>
+		<STBLXMLEntry>
+			<Identifier>NeonOcean.S4.Order.Interactions.Standard.About_Mod.Display_Name</Identifier>
+			<Key>4031946668</Key>
+			<English>About</English>
+		</STBLXMLEntry>
+		<STBLXMLEntry>
+			<Identifier>NeonOcean.S4.Order.Interactions.Standard.Documentation.Display_Name</Identifier>
+			<Key>3146042648</Key>
+			<English>Documentation</English>
+		</STBLXMLEntry>
+		<STBLXMLEntry>
+			<Identifier>NeonOcean.S4.Order.Interactions.Standard.Reset.Display_Name</Identifier>
+			<Key>3310385506</Key>
+			<English>Reset</English>
+		</STBLXMLEntry>
+		<STBLXMLEntry>
+			<Identifier>NeonOcean.S4.Order.Interactions.Standard.Visit_Mod_Page.Display_Name</Identifier>
+			<Key>681249744</Key>
+			<English>Visit mod page</English>
+		</STBLXMLEntry>
+		<STBLXMLEntry>
+			<Identifier>NeonOcean.S4.Order.Interactions.Support.Dependent.Disabled_Tooltip</Identifier>
+			<Key>2515170047</Key>
+			<English>The mod '{0.String}' is not loaded.</English>
+		</STBLXMLEntry>
+		<STBLXMLEntry>
+			<Identifier>NeonOcean.S4.Order.Mod_Loading.Cascade_Failure_Notification.Text</Identifier>
+			<Key>3805481455</Key>
+			<English>Some mod could not be loaded because one or more of their requirements failed to load.
+
+The following mods are not loaded because of this:
+{0.String}</English>
+		</STBLXMLEntry>
+		<STBLXMLEntry>
+			<Identifier>NeonOcean.S4.Order.Mod_Loading.Cascade_Failure_Notification.Title</Identifier>
+			<Key>2625403396</Key>
+			<English>NeonOcean - Order: Cascade Failure Detected</English>
+		</STBLXMLEntry>
+		<STBLXMLEntry>
+			<Identifier>NeonOcean.S4.Order.Mod_Loading.Failure_Notification.Text</Identifier>
+			<Key>3835239609</Key>
+			<English>Some mods failed to load correctly.
+
+The following mods had to be disabled because of this:
+{0.String}</English>
+		</STBLXMLEntry>
+		<STBLXMLEntry>
+			<Identifier>NeonOcean.S4.Order.Mod_Loading.Failure_Notification.Title</Identifier>
+			<Key>3927702068</Key>
+			<English>NeonOcean - Order: Major Failure Detected</English>
+		</STBLXMLEntry>
+		<STBLXMLEntry>
+			<Identifier>NeonOcean.S4.Order.Mod_Loading.Invalid_Setup_Notification.Text</Identifier>
+			<Key>2090537172</Key>
+			<English>Detected missing required mods, incompatible mods, or incompatible mod versions. 
+
+The following mods had to be disabled because of this:
+{0.String}</English>
+		</STBLXMLEntry>
+		<STBLXMLEntry>
+			<Identifier>NeonOcean.S4.Order.Mod_Loading.Invalid_Setup_Notification.Title</Identifier>
+			<Key>3471017138</Key>
+			<English>NeonOcean - Order: Bad Mod Setup Detected</English>
+		</STBLXMLEntry>
+		<STBLXMLEntry>
+			<Identifier>NeonOcean.S4.Order.Mod_Loading.Not_Loaded_Notification.Text</Identifier>
+			<Key>1328112988</Key>
+			<English>A few mods were never loaded, even though they should have been.
+
+The following mods are not loaded because of this:
+{0.String}</English>
+		</STBLXMLEntry>
+		<STBLXMLEntry>
+			<Identifier>NeonOcean.S4.Order.Mod_Loading.Not_Loaded_Notification.Title</Identifier>
+			<Key>2899849598</Key>
+			<English>NeonOcean - Order: Mods Not Loaded</English>
+		</STBLXMLEntry>
+		<STBLXMLEntry>
+			<Identifier>NeonOcean.S4.Order.Mod_Settings.List.Paths.Root.Description</Identifier>
+			<Key>63565258</Key>
+			<English>Settings for the mod Order.</English>
+		</STBLXMLEntry>
+		<STBLXMLEntry>
+			<Identifier>NeonOcean.S4.Order.Mod_Settings.List.Title</Identifier>
+			<Key>750837481</Key>
+			<English>Mod Settings</English>
+		</STBLXMLEntry>
+		<STBLXMLEntry>
+			<Identifier>NeonOcean.S4.Order.Mod_Settings.Values.Check_For_Preview_Updates.Description</Identifier>
+			<Key>3001875472</Key>
+			<English>If enabled, the mod will report preview updates along with release updates. The setting "Check For Updates" still needs to be enabled in order to check for updates. This setting will not be used if NeonOcean's Main is installed.</English>
+		</STBLXMLEntry>
+		<STBLXMLEntry>
+			<Identifier>NeonOcean.S4.Order.Mod_Settings.Values.Check_For_Preview_Updates.Name</Identifier>
+			<Key>2921310502</Key>
+			<English>Check For Preview Updates</English>
+		</STBLXMLEntry>
+		<STBLXMLEntry>
+			<Identifier>NeonOcean.S4.Order.Mod_Settings.Values.Check_For_Updates.Description</Identifier>
+			<Key>2031660311</Key>
+			<English>If enabled, a notification will be shown whenever a mod update is available. This setting will not be used if Main by NeonOcean is installed.</English>
+		</STBLXMLEntry>
+		<STBLXMLEntry>
+			<Identifier>NeonOcean.S4.Order.Mod_Settings.Values.Check_For_Updates.Name</Identifier>
+			<Key>2620196778</Key>
+			<English>Check For Updates</English>
+		</STBLXMLEntry>
+		<STBLXMLEntry>
+			<Identifier>NeonOcean.S4.Order.Mod_Settings.Values.Show_Promotions.Description</Identifier>
+			<Key>1477334222</Key>
+			<English>If enabled, the mod may occasionally show a notification to promote things like new mods or major updates. All promotions will only ever be shown once. This setting will not be used if NeonOcean's Main is installed.</English>
+		</STBLXMLEntry>
+		<STBLXMLEntry>
+			<Identifier>NeonOcean.S4.Order.Mod_Settings.Values.Show_Promotions.Name</Identifier>
+			<Key>3026272262</Key>
+			<English>Show Promotions</English>
+		</STBLXMLEntry>
+		<STBLXMLEntry>
+			<Identifier>NeonOcean.S4.Order.Reset.Confirm_Dialog.Everything_Text</Identifier>
+			<Key>1020902634</Key>
+			<English>Are you sure you want to reset this mod?</English>
+		</STBLXMLEntry>
+		<STBLXMLEntry>
+			<Identifier>NeonOcean.S4.Order.Reset.Confirm_Dialog.No_Button</Identifier>
+			<Key>291917783</Key>
+			<English>No</English>
+		</STBLXMLEntry>
+		<STBLXMLEntry>
+			<Identifier>NeonOcean.S4.Order.Reset.Confirm_Dialog.Settings_Text</Identifier>
+			<Key>1617918298</Key>
+			<English>Are you sure you want to reset all settings for this mod?</English>
+		</STBLXMLEntry>
+		<STBLXMLEntry>
+			<Identifier>NeonOcean.S4.Order.Reset.Confirm_Dialog.Title</Identifier>
+			<Key>1904365976</Key>
+			<English>Resetting {0.String}...</English>
+		</STBLXMLEntry>
+		<STBLXMLEntry>
+			<Identifier>NeonOcean.S4.Order.Reset.Confirm_Dialog.Yes_Button</Identifier>
+			<Key>2704255539</Key>
+			<English>Yes</English>
+		</STBLXMLEntry>
+		<STBLXMLEntry>
+			<Identifier>NeonOcean.S4.Order.Reset.Dialog.Cancel_Button</Identifier>
+			<Key>1196102140</Key>
+			<English>Cancel</English>
+		</STBLXMLEntry>
+		<STBLXMLEntry>
+			<Identifier>NeonOcean.S4.Order.Reset.Dialog.Everything_Button</Identifier>
+			<Key>2723434677</Key>
+			<English>Reset Everything</English>
+		</STBLXMLEntry>
+		<STBLXMLEntry>
+			<Identifier>NeonOcean.S4.Order.Reset.Dialog.Settings_Button</Identifier>
+			<Key>214434395</Key>
+			<English>Reset Settings</English>
+		</STBLXMLEntry>
+		<STBLXMLEntry>
+			<Identifier>NeonOcean.S4.Order.Reset.Dialog.Text</Identifier>
+			<Key>2028538986</Key>
+			<English>What do you want to reset?</English>
+		</STBLXMLEntry>
+		<STBLXMLEntry>
+			<Identifier>NeonOcean.S4.Order.Reset.Dialog.Title</Identifier>
+			<Key>3199216600</Key>
+			<English>Resetting {0.String}...</English>
+		</STBLXMLEntry>
+		<STBLXMLEntry>
+			<Identifier>NeonOcean.S4.Order.Setting_Dialogs.Apply_Button</Identifier>
+			<Key>1818702976</Key>
+			<English>Apply</English>
+		</STBLXMLEntry>
+		<STBLXMLEntry>
+			<Identifier>NeonOcean.S4.Order.Setting_Dialogs.Cancel_Button</Identifier>
+			<Key>953331461</Key>
+			<English>Cancel</English>
+		</STBLXMLEntry>
+		<STBLXMLEntry>
+			<Identifier>NeonOcean.S4.Order.Setting_Dialogs.Choice_Button</Identifier>
+			<Key>745826898</Key>
+			<English>{0.String}{1.String}{2.String}</English>
+		</STBLXMLEntry>
+		<STBLXMLEntry>
+			<Identifier>NeonOcean.S4.Order.Setting_Dialogs.Description_Parts.Default</Identifier>
+			<Key>1095238749</Key>
+			<English>Default: {0.String}</English>
+		</STBLXMLEntry>
+		<STBLXMLEntry>
+			<Identifier>NeonOcean.S4.Order.Setting_Dialogs.Description_Parts.Documentation</Identifier>
+			<Key>1304818266</Key>
+			<English>&lt;a href="event:{0.String}"&gt;&lt;u&gt;View Documentation&lt;/u&gt;&lt;/a&gt;</English>
+		</STBLXMLEntry>
+		<STBLXMLEntry>
+			<Identifier>NeonOcean.S4.Order.Setting_Dialogs.Description_Parts.Overridden</Identifier>
+			<Key>2279312370</Key>
+			<English>&lt;b&gt;Notice:&lt;/b&gt; This setting's value has been overridden. Any changes will be remembered but ignored.</English>
+		</STBLXMLEntry>
+		<STBLXMLEntry>
+			<Identifier>NeonOcean.S4.Order.Setting_Dialogs.Description_Parts.Overridden_Value</Identifier>
+			<Key>1869034318</Key>
+			<English>Overriden to: {0.String}
+Reason: {1.String}</English>
+		</STBLXMLEntry>
+		<STBLXMLEntry>
+			<Identifier>NeonOcean.S4.Order.Setting_Lists.Reset_All.Button.Description</Identifier>
+			<Key>1830370931</Key>
+			<English>Reset every setting to its default.</English>
+		</STBLXMLEntry>
+		<STBLXMLEntry>
+			<Identifier>NeonOcean.S4.Order.Setting_Lists.Reset_All.Button.Text</Identifier>
+			<Key>3186560930</Key>
+			<English>Reset All Settings</English>
+		</STBLXMLEntry>
+		<STBLXMLEntry>
+			<Identifier>NeonOcean.S4.Order.Setting_Lists.Reset_All.Confirm_Dialog.Description</Identifier>
+			<Key>2619087524</Key>
+			<English>Are you sure you want to reset all settings?</English>
+		</STBLXMLEntry>
+		<STBLXMLEntry>
+			<Identifier>NeonOcean.S4.Order.Setting_Lists.Reset_All.Confirm_Dialog.No_Button</Identifier>
+			<Key>1111478509</Key>
+			<English>No</English>
+		</STBLXMLEntry>
+		<STBLXMLEntry>
+			<Identifier>NeonOcean.S4.Order.Setting_Lists.Reset_All.Confirm_Dialog.Title</Identifier>
+			<Key>4274458031</Key>
+			<English>Reset All Settings.</English>
+		</STBLXMLEntry>
+		<STBLXMLEntry>
+			<Identifier>NeonOcean.S4.Order.Setting_Lists.Reset_All.Confirm_Dialog.Yes_Button</Identifier>
+			<Key>3387424293</Key>
+			<English>Yes</English>
+		</STBLXMLEntry>
+		<STBLXMLEntry>
+			<Identifier>NeonOcean.S4.Order.Setting_Lists.Row_Parts.Setting.Overridden</Identifier>
+			<Key>177049103</Key>
+			<English>(Saved value: {0.String})
+This setting's value has been overridden.</English>
+		</STBLXMLEntry>
+		<STBLXMLEntry>
+			<Identifier>NeonOcean.S4.Order.Setting_Lists.Row_Parts.Setting.Value</Identifier>
+			<Key>2558875503</Key>
+			<English>{0.String}</English>
+		</STBLXMLEntry>
+		<STBLXMLEntry>
+			<Identifier>NeonOcean.S4.Order.Setting_Lists.Title</Identifier>
+			<Key>2954705697</Key>
+			<English>Settings</English>
+		</STBLXMLEntry>
+		<STBLXMLEntry>
+			<Identifier>NeonOcean.S4.Order.Setting_Lists.Title_Template</Identifier>
+			<Key>3804586057</Key>
+			<English>{0.String} - {1.String}</English>
+		</STBLXMLEntry>
+		<STBLXMLEntry>
+			<Identifier>NeonOcean.S4.Order.Settings.Misc.Override.Unknown_Reason</Identifier>
+			<Key>3371861924</Key>
+			<English>Unknown</English>
+		</STBLXMLEntry>
+		<STBLXMLEntry>
+			<Identifier>NeonOcean.S4.Order.Settings.Types.Boolean.Yes_No.False</Identifier>
+			<Key>2511400980</Key>
+			<English>No</English>
+		</STBLXMLEntry>
+		<STBLXMLEntry>
+			<Identifier>NeonOcean.S4.Order.Settings.Types.Boolean.Yes_No.True</Identifier>
+			<Key>4268321082</Key>
+			<English>Yes</English>
+		</STBLXMLEntry>
+		<STBLXMLEntry>
+			<Identifier>NeonOcean.S4.Order.Text_Builder.Formatting</Identifier>
+			<Key>291780999</Key>
+			<English>{0.String}{1.String}</English>
+		</STBLXMLEntry>
+	</Entries>
+</STBLXMLFile>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<I n="NeonOcean_S4_Global_Interactions_Visit_NeonOcean_Site" s="2737879403372943425" i="interaction" m="NeonOcean.S4.Order.Interactions.Global" c="VisitNeonOceanSiteInteraction">
+	<T n="display_name">404109003</T>
+	<T n="category">4719607191068539616<!--PieMenuCategory: NeonOcean_S4_Global_Interaction_Categories_NeonOcean--></T>
+	<V n="_saveable" t="disabled" />
+	<L n="basic_extras">
+		<V t="do_command">
+			<U n="do_command">
+				<T n="command">neonocean.s4.order.global.visit_neonocean_site</T>
+			</U>
+		</V>
+	</L>
+	<V n="pie_menu_icon" t="enabled">
+		<V n="enabled" t="resource_key">
+			<U n="resource_key">
+				<T n="key">00B2D882:00000000:4931B65AC836D73A</T>
+			</U>
+		</V>
+	</V>
+	<T n="pie_menu_priority">5</T>
+	<L n="ObjectRegistrationInformation">
+		<V t="byObjectInstanceID">
+			<U n="byObjectInstanceID">
+				<L n="InstanceIDs">
+					<T>14965</T>
+				</L>
+			</U>
+		</V>
+	</L>
+</I>

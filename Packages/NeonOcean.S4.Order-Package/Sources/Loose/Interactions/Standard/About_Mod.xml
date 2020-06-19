@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<I n="NeonOcean_S4_Order_Interactions_Standard_About_Mod" s="12993549613725479565" i="interaction" m="NeonOcean.S4.Order.Interactions.Standard" c="AboutModInteraction">
+	<T n="display_name">4031946668</T>
+	<T n="category">10635246917734688906<!--PieMenuCategory: NeonOcean_S4_Order_Interaction_Categories_Order--></T>
+	<V n="_saveable" t="disabled" />
+	<L n="basic_extras">
+		<V t="do_command">
+			<U n="do_command">
+				<T n="command">neonocean.s4.order.standard.about_mod</T>
+			</U>
+		</V>
+	</L>
+	<L n="ObjectRegistrationInformation">
+		<V t="byObjectInstanceID">
+			<U n="byObjectInstanceID">
+				<L n="InstanceIDs">
+					<T>14965</T>
+				</L>
+			</U>
+		</V>
+	</L>
+</I>

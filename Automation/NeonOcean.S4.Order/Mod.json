@@ -1,0 +1,25 @@
+{
+	"Namespace": "NeonOcean.S4.Order",
+	"Name": "Order",
+	"Information": "NeonOcean.S4.Order/NeonOcean.S4.Order-NeonOcean-Mod.json",
+	"Packages": [
+		{
+			"FileName": "NeonOcean.S4.Order-Package.package",
+			"MergeRoot": "NeonOcean.S4.Order"
+		}
+	],
+	"Publishing": {
+		"InstallerFileName": "NeonOcean.S4.Order-Installer-v{0}.exe",
+		"FilesFileName": "NeonOcean.S4.Order-Files-v{0}.zip",
+		"SourcesFileName": "NeonOcean.S4.Order-Sources-v{0}.zip"
+	},
+	"Python": {
+		"ArchiveFileName": "--NeonOcean.S4.Order.ts4script",
+		"SourceRoot": "",
+		"SourceTarget": "NeonOcean",
+		"SourceExcluded": [],
+		"MergeRoot": ""
+	},
+	"Uninstall": "NeonOcean.S4.Order/Uninstall.exe",
+	"UninstallFiles": "NeonOcean.S4.Order/Files.txt"
+}

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<I n="NeonOcean_S4_Order_Interactions_Standard_Visit_Mod_Page" s="10701732131429709120" i="interaction" m="NeonOcean.S4.Order.Interactions.Standard" c="VisitModPageInteraction">
+	<T n="display_name">681249744</T>
+	<T n="category">10635246917734688906<!--PieMenuCategory: NeonOcean_S4_Order_Interaction_Categories_Order--></T>
+	<V n="_saveable" t="disabled" />
+	<L n="basic_extras">
+		<V t="do_command">
+			<U n="do_command">
+				<T n="command">neonocean.s4.order.standard.visit_mod_page</T>
+			</U>
+		</V>
+	</L>
+	<V n="pie_menu_icon" t="enabled">
+		<V n="enabled" t="resource_key">
+			<U n="resource_key">
+				<T n="key">00B2D882:00000000:4931B65AC836D73A</T>
+			</U>
+		</V>
+	</V>
+	<L n="ObjectRegistrationInformation">
+		<V t="byObjectInstanceID">
+			<U n="byObjectInstanceID">
+				<L n="InstanceIDs">
+					<T>14965</T>
+				</L>
+			</U>
+		</V>
+	</L>
+</I>
