@@ -55,7 +55,7 @@ def _GetS4UserDataPath () -> str:
 
 	moduleFilePath = os.path.normpath(__file__)  # type: str
 
-	s4Directories = os.path.normpath("electronic Arts\\the sims 4")  # type: str
+	s4Directories = os.path.join("electronic Arts", "the sims 4")  # type: str
 	s4DirectoriesMods = os.path.join(s4Directories, "mods")  # type: str
 	s4DirectoriesStartIndex = moduleFilePath.lower().rfind(s4DirectoriesMods.lower())
 

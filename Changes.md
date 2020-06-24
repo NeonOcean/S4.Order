@@ -1,3 +1,8 @@
+## v1.4.1 (June 24, 2020)
+
+### Fixed bugs
+- We can now correctly find the mods folder on mac computers.
+
 ## v1.4.0 (June 19, 2020)
 
 ### Changes
