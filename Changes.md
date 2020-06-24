@@ -1,4 +1,5 @@
-## v1.4.0 ()
+## v1.4.0 (June 19, 2020)
+
 ### Changes
 - Version numbers now follow the semantic versioning specification. https://semver.org/
 - Changed this mod's namespace from NeonOcean.Order to NeonOcean.S4.Order.
