@@ -1,3 +1,10 @@
+## v1.4.2 (July 16, 2020)
+
+### Fixed bugs
+- Fixed bug that caused the mod to fail because it couldn't find the sims 4 folder when using certain languages.
+
+______________________________
+
 ## v1.4.1 (June 24, 2020)
 
 ### Fixed bugs

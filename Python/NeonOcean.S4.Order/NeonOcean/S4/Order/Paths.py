@@ -46,31 +46,26 @@ def _GetModuleRootPath () -> str:
 	return rootPath
 
 def _GetS4UserDataPath () -> str:
-	moduleRootPath = _GetModuleRootPath()  # type: str
-	s4PointerPath = os.path.join(os.path.dirname(moduleRootPath), "S4Path.txt")  # type: str
+	moduleRootPath = pathlib.Path(_GetModuleRootPath())  # type: pathlib.Path
 
-	if os.path.exists(s4PointerPath):
-		with open(s4PointerPath, "r") as s4PointerFile:
+	s4PointerPath = moduleRootPath.parent.joinpath("S4Path.txt")  # type: pathlib.Path
+
+	if s4PointerPath.exists():
+		with open(str(s4PointerPath), "r") as s4PointerFile:
 			return s4PointerFile.read()
 
-	moduleFilePath = os.path.normpath(__file__)  # type: str
+	for moduleRootParent in moduleRootPath.parents:  # type: pathlib.Path
+		if moduleRootParent.name.lower() == "mods":
+			return str(moduleRootParent.parent)
 
-	s4Directories = os.path.join("electronic Arts", "the sims 4")  # type: str
-	s4DirectoriesMods = os.path.join(s4Directories, "mods")  # type: str
-	s4DirectoriesStartIndex = moduleFilePath.lower().rfind(s4DirectoriesMods.lower())
-
-	if s4DirectoriesStartIndex != -1:
-		s4DirectoriesEndIndex = s4DirectoriesStartIndex + len(s4Directories) + 1
-
-		return moduleFilePath[:s4DirectoriesEndIndex]
-
-	raise Exception("Cannot find The Sims 4 user data path")
+	raise Exception("Cannot find The Sims 4 user data path.\nModule Root: %s" % (str(moduleRootPath),))
 
 def _Setup () -> None:
 	global ModuleRootPath, UserDataPath, ModsPath, SavesPath, DebugPath, PersistentPath, TemporaryPath
 
 	ModuleRootPath = _GetModuleRootPath()  # type: str
 	UserDataPath = _GetS4UserDataPath()  # type: str
+	print(UserDataPath)
 
 	ModsPath = os.path.join(UserDataPath, "Mods")  # type: str
 	SavesPath = os.path.join(UserDataPath, "Saves")  # type: str
