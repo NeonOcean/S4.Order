@@ -65,7 +65,6 @@ def _Setup () -> None:
 
 	ModuleRootPath = _GetModuleRootPath()  # type: str
 	UserDataPath = _GetS4UserDataPath()  # type: str
-	print(UserDataPath)
 
 	ModsPath = os.path.join(UserDataPath, "Mods")  # type: str
 	SavesPath = os.path.join(UserDataPath, "Saves")  # type: str

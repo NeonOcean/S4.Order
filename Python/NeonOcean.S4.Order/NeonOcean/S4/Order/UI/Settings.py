@@ -262,14 +262,15 @@ class StandardDialog(SettingDialogBase):
 		return valuesParts
 
 	def _GetDescriptionDocumentationParts (self, setting: UISettingsShared.SettingWrapper) -> typing.List[typing.Union[localization.LocalizedString, str, int, float]]:
-		documentationURL = self._GetDescriptionDocumentationURL(setting)  # type: typing.Optional[str]
+		return [] # Disabled the documentation parts because the links no longer work on some types of dialogs.
+		#documentationURL = self._GetDescriptionDocumentationURL(setting)  # type: typing.Optional[str]
 
-		if documentationURL is None:
-			documentationURL = "**"
+		#if documentationURL is None:
+		#	documentationURL = "**"
 
-		documentationPart = self._GetDescriptionPartsDocumentationText()  # type: localization.LocalizedString
-		Language.AddTokens(documentationPart, documentationURL)
-		return [documentationPart]
+		#documentationPart = self._GetDescriptionPartsDocumentationText()  # type: localization.LocalizedString
+		#Language.AddTokens(documentationPart, documentationURL)
+		#return [documentationPart]
 
 	def _GetDescriptionSettingText (self, setting: UISettingsShared.SettingWrapper) -> localization.LocalizedString:
 		return Language.CreateLocalizationString("**")
